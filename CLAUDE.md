@@ -15,13 +15,23 @@ WIHARD is a monorepo holding every project of the platform plus the shared busin
 | `packages/*` | Shared contracts, UI, config — created once two projects need the same code | 1 |
 | `docs/` | Shared BA, architecture, and design docs read by every project | — |
 
-Each project directory has its own `CLAUDE.md` with its scope and the requirements it owns. No project has been scaffolded yet, so there are no build, lint, or test commands; when scaffolding one, add its commands (including running a single test) to that project's `CLAUDE.md`, and add root-level workspace commands here.
+Each project directory has its own `CLAUDE.md` with its scope, the requirements it owns, and its commands. Only `apps/web` is scaffolded so far.
+
+## Commands
+
+pnpm workspaces + Turborepo, Node ≥ 22 (`.nvmrc`). From the repo root:
+
+- `pnpm install`
+- `pnpm dev | build | lint | typecheck | test` — runs the task in every workspace via Turbo
+- `pnpm --filter @wihard/web <script>` — run one project's script (workspace packages are named `@wihard/<project>`)
+
+New projects must expose the same script names (`build`, `lint`, `typecheck`, `test`, `dev`) so the root commands and CI pick them up.
 
 ## Shared documentation — read before implementing
 
 - `docs/ba/BUSINESS_REQUIREMENTS.md` (Vietnamese) — the source of truth for requirements: phased scope, `FR-*` functional requirements, `BR-*` business rules, `NFR-*` non-functional requirements, the platform/creator/infra responsibility matrix, and open questions (`[CẦN QUYẾT ĐỊNH]`) still awaiting the Product Owner. `[GIẢ ĐỊNH]` marks unconfirmed assumptions.
 - `docs/ba/PRODUCT_VISION.md` — positioning, copy, public sitemap, and required sections of product detail pages.
-- `docs/architecture/ARCHITECTURE.md` (Vietnamese) — project boundaries, system flow, the requirement → project mapping table, and the proposed stack (most choices still pending a decision).
+- `docs/architecture/ARCHITECTURE.md` (Vietnamese) — project boundaries, system flow, the requirement → project mapping table, and the stack table; decided choices are recorded in `docs/architecture/adr/`.
 - `docs/design/mockups/` — page screenshots used as visual references.
 
 ## Cross-project rules

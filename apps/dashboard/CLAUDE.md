@@ -1,6 +1,6 @@
 # apps/dashboard — Logged-in application
 
-One app with role-based areas for Users, Creators, and Admins (a single app is an unconfirmed assumption; see `docs/architecture/ARCHITECTURE.md` §3). Not yet scaffolded.
+One app with role-based areas for Users, Creators, and Admins (decided in `docs/architecture/adr/0003-single-dashboard-app.md`). Not yet scaffolded.
 
 ## Requirements owned
 

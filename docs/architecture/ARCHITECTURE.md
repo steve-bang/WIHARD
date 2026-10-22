@@ -55,7 +55,7 @@ Mỗi project có `CLAUDE.md` riêng mô tả phạm vi, yêu cầu BA liên qua
 | Hạ tầng | `infra` | Môi trường, triển khai, CI/CD, giám sát | Đội kỹ thuật | 1 |
 | Shared packages | `packages/*` | Hợp đồng dữ liệu, UI, cấu hình | Các project | 1 (khi có ≥2 project dùng chung) |
 
-**[GIẢ ĐỊNH]** Một app dashboard duy nhất, phân khu theo vai trò, thay vì tách riêng admin. Lý do: giai đoạn 1 khối lượng admin nhỏ, giảm chi phí vận hành. Tách admin ra app riêng khi yêu cầu bảo mật/kiểm toán tăng (giai đoạn 3–4).
+**Đã chốt (ADR 0003):** Một app dashboard duy nhất, phân khu theo vai trò, thay vì tách riêng admin. Lý do: giai đoạn 1 khối lượng admin nhỏ, giảm chi phí vận hành. Tách admin ra app riêng khi yêu cầu bảo mật/kiểm toán tăng (giai đoạn 3–4).
 
 ---
 
@@ -110,10 +110,10 @@ Vòng đời trạng thái sản phẩm (BRD §10.3) là một máy trạng thá
 
 | Hạng mục | Đề xuất | Lý do | Trạng thái |
 |---|---|---|---|
-| Ngôn ngữ | TypeScript toàn bộ | Dùng chung kiểu dữ liệu giữa frontend và backend | **[CẦN QUYẾT ĐỊNH]** |
-| Quản lý monorepo | pnpm workspaces + Turborepo | Phổ biến, nhẹ, cache build | **[CẦN QUYẾT ĐỊNH]** |
-| `apps/web` | Next.js (App Router), Tailwind CSS, Lucide icons | Theo `PRODUCT_VISION.md` §4; SSR/SSG tốt cho SEO | Đã định hướng |
-| `apps/dashboard` | Next.js (App Router), Tailwind CSS | Đồng bộ với web, dùng chung `packages/ui` | **[GIẢ ĐỊNH]** |
+| Ngôn ngữ | TypeScript toàn bộ | Dùng chung kiểu dữ liệu giữa frontend và backend | Đã chốt — ADR 0001 |
+| Quản lý monorepo | pnpm workspaces + Turborepo | Phổ biến, nhẹ, cache build | Đã chốt — ADR 0002 |
+| `apps/web` | Next.js 16 (App Router, Cache Components), Tailwind CSS v4, Lucide icons, Vitest | Theo `PRODUCT_VISION.md` §4; SSR/SSG tốt cho SEO | Đã scaffold |
+| `apps/dashboard` | Next.js (App Router), Tailwind CSS, một app phân khu theo vai trò | Đồng bộ với web, dùng chung `packages/ui` | Đã chốt — ADR 0003 |
 | `services/api` | Node.js (NestJS hoặc Fastify), PostgreSQL, ORM có migration | Dùng chung TypeScript; dữ liệu quan hệ (sản phẩm, creator, phiên bản, đơn hàng) | **[CẦN QUYẾT ĐỊNH]** |
 | Hợp đồng API | OpenAPI sinh từ API hoặc schema (zod) trong `packages/contracts` | Một nguồn định nghĩa, sinh client cho frontend | **[CẦN QUYẾT ĐỊNH]** |
 | `infra` | Terraform + GitHub Actions | IaC phổ biến, độc lập nhà cung cấp | **[CẦN QUYẾT ĐỊNH]** nhà cung cấp cloud (BRD Q8) |
