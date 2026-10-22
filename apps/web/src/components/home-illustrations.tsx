@@ -274,3 +274,70 @@ export function SolutionsIllustration() {
     </div>
   );
 }
+
+// Hero art for the creators page (docs/design/mockups/for-creators.png). The mockup's photo
+// is replaced by a creator card so the page ships without stock imagery.
+export function CreatorsIllustration({ name, role }: { name: string; role: string }) {
+  const rows = [
+    ["Garage Management", "Published", "bg-emerald-50 text-emerald-700"],
+    ["Booking System", "Published", "bg-emerald-50 text-emerald-700"],
+    ["CRM Dashboard", "Draft", "bg-amber-50 text-amber-700"],
+  ];
+  return (
+    <div aria-hidden className="relative mx-auto h-[400px] w-full max-w-[560px]">
+      <div className="absolute right-0 top-10 h-[330px] w-64 rounded-[2rem] bg-gradient-to-br from-brand-100 via-brand-50 to-white" />
+      <div className="absolute right-14 top-32 w-44 rounded-2xl border border-line bg-white p-5 text-center shadow-xl">
+        <Avatar name={name} className="size-16 text-lg" />
+        <p className="mt-3 font-semibold">{name}</p>
+        <p className="text-xs text-muted">{role}</p>
+        <p className="mt-4 -rotate-6 font-serif text-lg italic leading-tight text-brand-600">
+          Build. Share.
+          <br />
+          Earn.
+        </p>
+      </div>
+
+      <div className="absolute left-0 top-0 z-10 w-72 rounded-xl border border-line bg-white p-4 shadow-xl">
+        <p className="text-xs font-semibold">Creator Dashboard</p>
+        <div className="mt-3 grid grid-cols-3 gap-2">
+          {[
+            ["Products", "12"],
+            ["Earnings", "$2,480"],
+            ["Active users", "8,642"],
+          ].map(([label, v]) => (
+            <div key={label} className="rounded-md border border-line p-2">
+              <p className="text-[9px] text-muted">{label}</p>
+              <p className="text-xs font-semibold">{v}</p>
+            </div>
+          ))}
+        </div>
+        <svg viewBox="0 0 200 40" className="mt-3 h-12 w-full">
+          <path d="M0 32 L20 26 L40 28 L60 18 L80 22 L100 14 L120 18 L140 10 L160 14 L180 8 L200 12" fill="none" stroke="#6366f1" strokeWidth="1.5" />
+        </svg>
+        <p className="mt-2 text-[10px] font-semibold">Your products</p>
+        <ul className="mt-2 space-y-2">
+          {rows.map(([product, status, cls]) => (
+            <li key={product} className="flex items-center gap-2 text-[10px]">
+              <span className="size-5 rounded bg-gradient-to-br from-slate-600 to-slate-400" />
+              <span className="flex-1">{product}</span>
+              <span className={`rounded px-1.5 py-0.5 text-[9px] font-medium ${cls}`}>{status}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="absolute -right-2 top-0 z-20 w-48 rounded-xl border border-line bg-white p-4 shadow-lg">
+        <p className="text-xs font-semibold">Publish your product</p>
+        <ul className="mt-3 space-y-1.5 text-[10px] text-muted">
+          {["Create product details", "Add screenshots & demo", "Submit for review"].map((t) => (
+            <li key={t} className="flex items-center gap-1.5">
+              <span className="flex size-3 items-center justify-center rounded-full bg-brand-600 text-[7px] text-white">✓</span>
+              {t}
+            </li>
+          ))}
+        </ul>
+        <div className="mt-3 rounded-md bg-brand-600 py-1.5 text-center text-[10px] font-medium text-white">Publish</div>
+      </div>
+    </div>
+  );
+}

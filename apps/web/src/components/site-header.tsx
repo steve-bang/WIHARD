@@ -3,6 +3,7 @@ import { ChevronDown, Menu, Search } from "lucide-react";
 import { mainNav, resourcesNav } from "@/lib/site";
 import { Container } from "./container";
 import { Logo } from "./logo";
+import { NavLink } from "./nav-link";
 
 // Dropdowns use <details> so navigation works without client JavaScript.
 export function SiteHeader() {
@@ -12,9 +13,9 @@ export function SiteHeader() {
         <Logo />
         <nav aria-label="Main" className="hidden items-center gap-7 text-sm font-medium text-ink/80 md:flex">
           {mainNav.map((item) => (
-            <Link key={item.href} href={item.href} className="hover:text-brand-600">
+            <NavLink key={item.href} href={item.href}>
               {item.label}
-            </Link>
+            </NavLink>
           ))}
           <details className="group relative">
             <summary className="flex cursor-pointer list-none items-center gap-1 hover:text-brand-600">

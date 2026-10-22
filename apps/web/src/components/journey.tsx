@@ -1,14 +1,20 @@
 import { Fragment } from "react";
 import { ArrowRight } from "lucide-react";
-import { journeySteps } from "@/lib/journey";
+import { journeySteps, type JourneyStep } from "@/lib/journey";
 
 // "inline": number and icon side by side (home, how-it-works). "stacked": large icon above
 // a numbered title (solutions page, per docs/design/mockups/solutions.png).
-export function Journey({ variant = "inline" }: { variant?: "inline" | "stacked" }) {
+export function Journey({
+  variant = "inline",
+  steps = journeySteps,
+}: {
+  variant?: "inline" | "stacked";
+  steps?: JourneyStep[];
+}) {
   const stacked = variant === "stacked";
   return (
     <ol className="grid gap-8 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] md:gap-4">
-      {journeySteps.map(({ title, icon: Icon, available, text }, i) => (
+      {steps.map(({ title, icon: Icon, available, text }, i) => (
         <Fragment key={title}>
           {i > 0 && (
             <ArrowRight aria-hidden className={`hidden size-4 text-muted md:block ${stacked ? "mt-7" : "mt-4"}`} />
