@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ChevronDown, Menu, Search } from "lucide-react";
-import { mainNav, resourcesNav } from "@/lib/site";
+import { mainNav, resourcesNav, siteConfig } from "@/lib/site";
 import { Container } from "./container";
 import { Logo } from "./logo";
 import { NavLink } from "./nav-link";
@@ -36,6 +36,9 @@ export function SiteHeader() {
           <Link href="/templates" aria-label="Search templates" className="text-ink/80 hover:text-brand-600">
             <Search className="size-5" />
           </Link>
+          <Link href={siteConfig.signInUrl} className="hidden text-sm font-medium text-ink/80 hover:text-brand-600 sm:block">
+            Sign in
+          </Link>
           <Link
             href="/templates"
             className="hidden rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white hover:bg-brand-700 sm:block"
@@ -48,7 +51,7 @@ export function SiteHeader() {
             </summary>
             <nav aria-label="Mobile" className="absolute inset-x-0 top-14 border-b border-line bg-white p-4 shadow-lg">
               <ul className="space-y-1 text-sm font-medium">
-                {[...mainNav, ...resourcesNav].map((item) => (
+                {[...mainNav, ...resourcesNav, { href: siteConfig.signInUrl, label: "Sign in" }].map((item) => (
                   <li key={item.href}>
                     <Link href={item.href} className="block rounded-lg px-3 py-2 hover:bg-surface">
                       {item.label}

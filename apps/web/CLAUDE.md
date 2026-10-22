@@ -14,7 +14,7 @@ Run from `apps/web` (or from the repo root with `pnpm --filter @wihard/web <scri
 - `pnpm typecheck` — runs `next typegen` first so the global `PageProps`/`LayoutProps` helpers exist
 - `pnpm test` — Vitest; single file: `pnpm vitest run src/lib/catalog/index.test.ts`, single test: add `-t "<name>"`
 
-Set `NEXT_PUBLIC_SITE_URL` for production so canonical URLs, `sitemap.xml`, and `robots.txt` use the real domain.
+Set `NEXT_PUBLIC_SITE_URL` for production so canonical URLs, `sitemap.xml`, and `robots.txt` use the real domain. Set `NEXT_PUBLIC_DASHBOARD_URL` once `apps/dashboard` is deployed: the header "Sign in" then points to `<url>/login`; without it, it goes to the `/sign-in` placeholder (noindex, not in the sitemap).
 
 ## Structure
 
@@ -38,4 +38,4 @@ Set `NEXT_PUBLIC_SITE_URL` for production so canonical URLs, `sitemap.xml`, and 
 
 ## Not done yet
 
-Interest/contact forms (FR-L01–L02, need `services/api`), product comparison (FR-D06), creator sign-up (the creators page links to `/contact?topic=creator` until the dashboard exists), public creator profile pages (the creator card has no "View creator profile" link yet), live demos (no sample product has a `demoUrl`, so the button is hidden), sign-in (owned by `apps/dashboard`), newsletter signup, real screenshots (placeholders render when `screenshots[].src` is empty), analytics events (NFR-10).
+Interest/contact forms (FR-L01–L02, need `services/api`), product comparison (FR-D06), creator sign-up (the creators page links to `/contact?topic=creator` until the dashboard exists), public creator profile pages (the creator card has no "View creator profile" link yet), live demos (no sample product has a `demoUrl`, so the button is hidden), newsletter signup, real screenshots (placeholders render when `screenshots[].src` is empty), analytics events (NFR-10).

@@ -1,6 +1,8 @@
 export const siteConfig = {
   name: "WIHARD",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  // Sign-in lives in apps/dashboard. Until it is deployed, /sign-in explains that accounts are coming.
+  signInUrl: process.env.NEXT_PUBLIC_DASHBOARD_URL ? `${process.env.NEXT_PUBLIC_DASHBOARD_URL}/login` : "/sign-in",
   headline: "Build software for your work, without coding.",
   copyrightYear: 2026,
   tagline: "Discover it. Make it yours. Put it to work.",
