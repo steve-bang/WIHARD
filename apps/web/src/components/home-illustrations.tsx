@@ -208,3 +208,69 @@ export function TemplatesIllustration() {
     </div>
   );
 }
+
+// Hero art for the solutions page (docs/design/mockups/solutions.png).
+export function SolutionsIllustration() {
+  return (
+    <div aria-hidden className="relative mx-auto h-[380px] w-full max-w-[540px]">
+      <div className="absolute left-0 top-4 flex h-[300px] w-[400px] overflow-hidden rounded-xl border border-line bg-white shadow-xl">
+        <div className="w-24 space-y-2.5 bg-ink p-3">
+          <div className="h-2 w-12 rounded bg-white/70" />
+          {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+            <div key={i} className={`h-1.5 rounded ${i === 0 ? "bg-brand-600" : "bg-white/20"}`} />
+          ))}
+        </div>
+        <div className="flex-1 p-4">
+          <p className="text-sm font-bold">Dashboard</p>
+          <div className="mt-3 grid grid-cols-3 gap-2">
+            {[
+              ["Bookings", "248"],
+              ["Revenue", "$12,480"],
+              ["Customers", "186"],
+            ].map(([label, v]) => (
+              <div key={label} className="rounded-md border border-line p-2">
+                <p className="text-[9px] text-muted">{label}</p>
+                <p className="text-xs font-semibold">{v}</p>
+              </div>
+            ))}
+          </div>
+          <svg viewBox="0 0 200 60" className="mt-3 h-20 w-full">
+            <path d="M0 48 L18 40 L36 44 L54 30 L72 36 L90 22 L108 28 L126 16 L144 24 L162 12 L180 18 L200 8" fill="none" stroke="#6366f1" strokeWidth="1.5" />
+          </svg>
+          <p className="mt-2 text-[10px] font-semibold">Recent bookings</p>
+          <div className="mt-2 space-y-2">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="flex items-center gap-2">
+                <span className="size-4 rounded-full bg-surface" />
+                <span className="h-1 w-20 rounded bg-surface" />
+                <span className="ml-auto h-1 w-8 rounded bg-surface" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute right-12 top-24 z-10 h-64 w-32 rounded-[1.4rem] border-4 border-ink bg-white p-2.5 shadow-2xl">
+        <div className="mx-auto h-1 w-8 rounded bg-ink" />
+        <p className="mt-3 text-center text-[11px] font-bold">Book Your Service</p>
+        <div className="mt-3 space-y-2">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="flex items-center gap-1.5 rounded-md border border-line p-1.5">
+              <span className="size-3 rounded-full bg-brand-600" />
+              <span className="h-1 flex-1 rounded bg-surface" />
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 h-5 rounded-md bg-brand-600" />
+      </div>
+
+      <div className="absolute -right-2 top-0 z-20 flex w-48 gap-3 rounded-xl border border-line bg-white p-3 shadow-lg">
+        <Sparkles className="size-5 shrink-0 text-brand-600" />
+        <div>
+          <p className="text-sm font-semibold">Easy to customize</p>
+          <p className="mt-0.5 text-xs text-muted">Each product lists what you can change.</p>
+        </div>
+      </div>
+    </div>
+  );
+}

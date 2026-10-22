@@ -29,16 +29,16 @@ export const creators: Creator[] = [
   },
 ];
 
-export const industries: { slug: Industry; name: string }[] = [
-  { slug: "e-commerce", name: "E-commerce" },
-  { slug: "healthcare", name: "Healthcare" },
-  { slug: "education", name: "Education" },
-  { slug: "real-estate", name: "Real estate" },
-  { slug: "automotive", name: "Automotive" },
-  { slug: "food-beverage", name: "Food & beverage" },
-  { slug: "professional-services", name: "Professional services" },
-  { slug: "other", name: "Other" },
-];
+export const industries: { slug: Industry; name: string; description: string }[] = [
+  { slug: "e-commerce", name: "E-commerce", description: "Online stores & retail" },
+  { slug: "healthcare", name: "Healthcare", description: "Clinics & medical services" },
+  { slug: "education", name: "Education", description: "Schools & training centers" },
+  { slug: "real-estate", name: "Real estate", description: "Property & rental" },
+  { slug: "automotive", name: "Automotive", description: "Garage & vehicle service" },
+  { slug: "food-beverage", name: "Food & beverage", description: "Restaurants & cafés" },
+  { slug: "professional-services", name: "Professional services", description: "Freelancers, agencies & consultants" },
+  { slug: "other", name: "Other", description: "Productivity & operations" },
+]
 
 export const solutions: Solution[] = [
   {
