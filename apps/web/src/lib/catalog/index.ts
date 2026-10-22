@@ -1,6 +1,6 @@
-import { creators, products, solutions } from "./data";
+import { creators, industries, products, solutions } from "./data";
 import { filterProducts } from "./filter";
-import type { Product, ProductCategory } from "./types";
+import type { Industry, Product, ProductCategory } from "./types";
 
 export type * from "./types";
 export * from "./filter";
@@ -29,6 +29,14 @@ export function getProduct(slug: string) {
 
 export function getCategory(slug: ProductCategory) {
   return categories.find((c) => c.slug === slug)!;
+}
+
+export function getIndustries() {
+  return industries;
+}
+
+export function getIndustry(slug: Industry) {
+  return industries.find((i) => i.slug === slug)!;
 }
 
 export function getCreator(slug: string) {

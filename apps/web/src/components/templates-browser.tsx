@@ -4,7 +4,7 @@ import {
   categories,
   facetCount,
   filterProducts,
-  getSolutions,
+  getIndustries,
   paginate,
   parseFilters,
   sortOptions,
@@ -21,7 +21,7 @@ const PAGE_SIZE = 9;
 
 const groups: { facet: Facet; title: string; options: { value: string; label: string }[] }[] = [
   { facet: "category", title: "Product type", options: categories.map((c) => ({ value: c.slug, label: c.name })) },
-  { facet: "solution", title: "Industry / Use case", options: getSolutions().map((s) => ({ value: s.slug, label: s.name })) },
+  { facet: "industry", title: "Industry / Use case", options: getIndustries().map((i) => ({ value: i.slug, label: i.name })) },
   {
     facet: "price",
     title: "Price model",

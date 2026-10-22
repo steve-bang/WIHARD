@@ -1,6 +1,6 @@
 import { products } from "./data";
-import { getCategory, getSolution } from "./index";
-import type { PriceModel, Product, ProductCategory, SupportProvider } from "./types";
+import { getCategory, getIndustry, getSolution } from "./index";
+import type { Industry, PriceModel, Product, ProductCategory, SupportProvider } from "./types";
 
 // FR-D03–D05: search, filters, and sorting for the template listing.
 
@@ -16,6 +16,7 @@ export type SortOption = (typeof sortOptions)[number]["value"];
 export interface ProductFilters {
   q?: string;
   category?: ProductCategory[];
+  industry?: Industry[];
   solution?: string[];
   price?: PriceModel[];
   support?: SupportProvider[];
@@ -31,6 +32,7 @@ export function parseFilters(params: SearchParams): ProductFilters {
   return {
     q: typeof params.q === "string" ? params.q.trim() : undefined,
     category: list(params.category) as ProductCategory[],
+    industry: list(params.industry) as Industry[],
     solution: list(params.solution),
     price: list(params.price) as PriceModel[],
     support: list(params.support) as SupportProvider[],
@@ -49,6 +51,7 @@ function matchesQuery(p: Product, query: string) {
     ...p.tags,
     ...p.audience,
     getCategory(p.category).name,
+    getIndustry(p.industry).name,
     ...p.solutions.map((s) => getSolution(s)?.name ?? ""),
   ]
     .join(" ")
@@ -58,6 +61,7 @@ function matchesQuery(p: Product, query: string) {
 
 const facets = {
   category: (p: Product, values: string[]) => values.includes(p.category),
+  industry: (p: Product, values: string[]) => values.includes(p.industry),
   solution: (p: Product, values: string[]) => p.solutions.some((s) => values.includes(s)),
   price: (p: Product, values: string[]) => values.includes(p.pricing.model),
   support: (p: Product, values: string[]) => values.includes(p.support.provider),

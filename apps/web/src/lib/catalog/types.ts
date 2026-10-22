@@ -7,6 +7,16 @@ export type ProductCategory = "websites" | "apps" | "business-tools";
 // BRD §10.3 — only the publicly visible subset of the product lifecycle.
 export type ProductStatus = "active" | "beta" | "deprecated";
 
+export type Industry =
+  | "automotive"
+  | "e-commerce"
+  | "healthcare"
+  | "education"
+  | "real-estate"
+  | "food-beverage"
+  | "professional-services"
+  | "other";
+
 export type PriceModel = "one-time" | "subscription";
 
 export type SupportProvider = "platform" | "creator" | "platform-and-creator";
@@ -41,6 +51,7 @@ export interface Product {
   tagline: string;
   description: string;
   category: ProductCategory;
+  industry: Industry;
   solutions: string[];
   status: ProductStatus;
   tags: string[];

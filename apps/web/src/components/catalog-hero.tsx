@@ -10,13 +10,15 @@ export function CatalogHero({
   text,
   searchPlaceholder,
   cards,
+  illustration,
 }: {
   eyebrow: string;
   icon: LucideIcon;
   title: React.ReactNode;
   text: string;
   searchPlaceholder?: string;
-  cards: ShowcaseCard[];
+  cards?: ShowcaseCard[];
+  illustration?: React.ReactNode;
 }) {
   return (
     <section className="overflow-hidden bg-gradient-to-br from-white via-brand-50/60 to-brand-100/60">
@@ -30,7 +32,7 @@ export function CatalogHero({
           <SearchForm className="mt-8 max-w-lg" placeholder={searchPlaceholder} />
         </div>
         <div className="hidden lg:block">
-          <HeroIllustration cards={cards} />
+          {illustration ?? <HeroIllustration cards={cards} />}
         </div>
       </Container>
     </section>

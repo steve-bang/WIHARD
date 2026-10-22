@@ -1,4 +1,4 @@
-import { Code2, Rocket, Search, Sparkles } from "lucide-react";
+import { Code2, Rocket, Search, SlidersHorizontal, Sparkles } from "lucide-react";
 import { Avatar } from "./avatar";
 
 // Decorative product mock-ups for the homepage (docs/design/mockups/home.png).
@@ -111,6 +111,99 @@ export function CreatorIllustration({ name, role, templates }: { name: string; r
         <p className="text-xs text-muted">{role}</p>
         <p className="mt-3 text-sm font-semibold">{templates}</p>
         <p className="text-xs text-muted">Template{templates === 1 ? "" : "s"}</p>
+      </div>
+    </div>
+  );
+}
+
+// Hero art for the template listing (docs/design/mockups/templates.png).
+export function TemplatesIllustration() {
+  return (
+    <div aria-hidden className="relative mx-auto h-[400px] w-full max-w-[540px]">
+      {/* Website preview */}
+      <div className="absolute left-28 top-0 w-80 overflow-hidden rounded-xl border border-line bg-white shadow-xl">
+        <div className="flex items-center justify-between px-3 py-2">
+          <div className="h-1.5 w-12 rounded bg-brand-600/60" />
+          <div className="flex gap-1">
+            {[0, 1, 2].map((i) => (
+              <span key={i} className="size-1.5 rounded-full bg-line" />
+            ))}
+          </div>
+        </div>
+        <div className="bg-ink py-7 pl-10 pr-5">
+          <div className="h-1 w-10 rounded bg-emerald-400/70" />
+          <p className="mt-2 text-lg font-bold text-white">Build. Grow. Succeed.</p>
+          <div className="mt-2 h-1 w-40 rounded bg-white/20" />
+          <div className="mt-4 flex gap-2">
+            <span className="h-4 w-14 rounded bg-white" />
+            <span className="h-4 w-12 rounded border border-white/30" />
+          </div>
+        </div>
+      </div>
+
+      {/* Preview card */}
+      <div className="absolute left-0 top-14 z-10 w-36 rounded-xl border border-line bg-white p-3 shadow-lg">
+        <div className="flex gap-2">
+          <Search className="size-4 shrink-0 text-brand-600" />
+          <div>
+            <p className="text-xs font-semibold">Preview first</p>
+            <p className="text-[10px] text-muted">See it before you commit.</p>
+          </div>
+        </div>
+        <div className="mt-3 grid grid-cols-3 gap-1.5">
+          {Array.from({ length: 6 }, (_, i) => (
+            <div key={i} className="h-4 rounded border border-line" />
+          ))}
+        </div>
+        <svg viewBox="0 0 100 30" className="mt-3 h-10 w-full">
+          <path d="M0 26 L15 20 L30 22 L45 12 L60 16 L75 6 L100 10 V30 H0Z" fill="#e0e7ff" />
+          <path d="M0 26 L15 20 L30 22 L45 12 L60 16 L75 6 L100 10" fill="none" stroke="#4f46e5" strokeWidth="1.2" />
+        </svg>
+      </div>
+
+      {/* Dashboard card */}
+      <div className="absolute bottom-4 left-28 w-72 rounded-xl border border-line bg-white p-4 shadow-xl">
+        <p className="text-xs font-semibold">Dashboard</p>
+        <div className="mt-3 flex justify-between">
+          {[0, 1, 2, 3, 4].map((i) => (
+            <span key={i} className="size-5 rounded-full bg-brand-50 ring-2 ring-brand-100" />
+          ))}
+        </div>
+        <svg viewBox="0 0 200 50" className="mt-3 h-16 w-full">
+          <path d="M0 40 L20 30 L40 34 L60 18 L80 26 L100 14 L120 22 L140 10 L160 20 L180 12 L200 18 V50 H0Z" fill="#eef2ff" />
+          <path d="M0 40 L20 30 L40 34 L60 18 L80 26 L100 14 L120 22 L140 10 L160 20 L180 12 L200 18" fill="none" stroke="#a5b4fc" strokeWidth="1.2" />
+        </svg>
+      </div>
+
+      {/* Profile list card */}
+      <div className="absolute bottom-6 -right-2 w-36 rounded-xl border border-line bg-white p-3 shadow-lg">
+        <Avatar name="Sarah Kim" className="size-7 text-[10px]" />
+        <div className="mt-3 space-y-2">
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className="flex justify-between">
+              <span className="h-1 w-14 rounded bg-surface" />
+              <span className="h-1 w-4 rounded bg-surface" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Phone */}
+      <div className="absolute right-20 top-28 z-20 h-60 w-28 rounded-[1.4rem] border-4 border-ink bg-white p-2 shadow-2xl">
+        <div className="mx-auto h-1 w-8 rounded bg-ink" />
+        <p className="mt-4 text-[11px] font-bold leading-tight">Your business, made simpler.</p>
+        <div className="mt-2 h-1 w-14 rounded bg-surface" />
+        <div className="mt-2 h-3 w-12 rounded bg-brand-600" />
+        <div className="mt-3 h-20 rounded-md bg-gradient-to-br from-brand-100 to-brand-600/40" />
+      </div>
+
+      {/* Floating card */}
+      <div className="absolute -right-4 top-4 z-30 flex w-48 gap-3 rounded-xl border border-line bg-white p-3 shadow-lg">
+        <SlidersHorizontal className="size-5 shrink-0 text-brand-600" />
+        <div>
+          <p className="text-sm font-semibold">Customizable</p>
+          <p className="mt-0.5 text-xs text-muted">Every product lists what you can change.</p>
+        </div>
       </div>
     </div>
   );
