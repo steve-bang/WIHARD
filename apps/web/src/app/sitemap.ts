@@ -2,11 +2,13 @@ import type { MetadataRoute } from "next";
 import { getProducts, getSolutions } from "@/lib/catalog";
 import { siteConfig, staticRoutes } from "@/lib/site";
 
+const url = (path: string) => new URL(path, siteConfig.url).toString();
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const paths = [
-    ...staticRoutes,
-    ...getSolutions().map((s) => `/solutions/${s.slug}`),
-    ...getProducts().map((p) => `/templates/${p.slug}`),
+  return [
+    ...staticRoutes.map((path) => ({ url: url(path) })),
+    ...getSolutions().map((s) => ({ url: url(`/solutions/${s.slug}`) })),
+    // A product page changes when a new version ships.
+    ...getProducts().map((p) => ({ url: url(`/templates/${p.slug}`), lastModified: p.versions[0]?.date })),
   ];
-  return paths.map((path) => ({ url: new URL(path, siteConfig.url).toString() }));
 }

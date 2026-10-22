@@ -3,10 +3,19 @@ import { ArrowRight, Boxes, Headphones, RefreshCw, ShieldCheck, Tag, Users, Zap 
 import { Container } from "@/components/container";
 import { CreatorIllustration, HeroIllustration } from "@/components/home-illustrations";
 import { Journey } from "@/components/journey";
+import { JsonLd } from "@/components/json-ld";
 import { ProductGrid } from "@/components/product-card";
 import { SearchForm } from "@/components/search-form";
 import { getCreator, getProducts } from "@/lib/catalog";
+import { absoluteUrl, pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
+
+export const metadata = pageMetadata({
+  title: { absolute: `${siteConfig.name} — ${siteConfig.headline}` },
+  description:
+    "Find a ready-made website, app, or business tool, customize it in plain language, and launch with a platform that helps you keep it running.",
+  path: "/",
+});
 
 const popular = [
   { label: "Website", href: "/templates/websites" },
@@ -39,6 +48,29 @@ export default function Home() {
   const featuredCreator = getCreator("alex-chen")!;
   return (
     <>
+      <JsonLd
+        data={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: siteConfig.name,
+            url: absoluteUrl("/"),
+            logo: absoluteUrl("/icon.svg"),
+            slogan: siteConfig.headline,
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: siteConfig.name,
+            url: absoluteUrl("/"),
+            potentialAction: {
+              "@type": "SearchAction",
+              target: `${absoluteUrl("/templates")}?q={search_term_string}`,
+              "query-input": "required name=search_term_string",
+            },
+          },
+        ]}
+      />
       {/* Hero */}
       <section className="overflow-hidden bg-white bg-[radial-gradient(ellipse_at_80%_20%,var(--color-brand-100),transparent_55%)]">
         <Container className="grid items-center gap-10 py-12 lg:grid-cols-[1fr_1.1fr] lg:py-14">

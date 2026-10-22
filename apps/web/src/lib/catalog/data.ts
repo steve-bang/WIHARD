@@ -314,7 +314,7 @@ export const products: Product[] = [
     industry: "other",
     name: "TaskFlow",
     tagline: "Project and task management for modern teams.",
-    description: "Plan projects, assign tasks, and track progress on boards and lists.",
+    description: "Plan projects, assign tasks with due dates, and track your team's progress on boards and lists.",
     category: "apps",
     solutions: [],
     status: "active",

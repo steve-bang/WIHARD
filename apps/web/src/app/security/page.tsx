@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Container } from "@/components/container";
 import { PageIntro } from "@/components/page-intro";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Security",
-  description: "How we approach data protection and platform trust.",
-};
+  description:
+    "How WIHARD protects your data: product review before publishing, licence checks, and clear rules on who owns the data you enter.",
+  path: "/security",
+});
 
 // Content outline: docs/ba/PRODUCT_VISION.md §5 and docs/ba/BUSINESS_REQUIREMENTS.md.
 export default function Page() {

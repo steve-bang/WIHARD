@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { Suspense } from "react";
 import { ArrowRight, ArrowUpRight, LayoutGrid, Lightbulb } from "lucide-react";
@@ -13,11 +14,12 @@ import { getIndustries, getIndustry, getProduct, getProducts, getSolutions, type
 
 // Layout follows docs/design/mockups/solutions.png.
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Solutions",
-  description: "Browse products by business problem, workflow, and industry.",
-  alternates: { canonical: "/solutions" },
-};
+  description:
+    "Find software solutions by industry and business problem: garages, clinics, online stores, bookings, CRM, and more — ready to customize.",
+  path: "/solutions",
+});
 
 const FEATURED = ["garage-management-website", "clinic-booking", "shoply", "customer-management-crm", "learnhub", "homefinder"];
 const INDUSTRY_CARDS: Industry[] = ["automotive", "healthcare", "e-commerce", "education", "real-estate", "food-beverage"];

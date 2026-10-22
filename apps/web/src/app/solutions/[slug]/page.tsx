@@ -7,6 +7,8 @@ import { CtaBanner } from "@/components/cta-banner";
 import { solutionIcon } from "@/components/solution-icons";
 import { TemplateCard } from "@/components/template-card";
 import { getProducts, getSolution, getSolutions } from "@/lib/catalog";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
 
 export function generateStaticParams() {
   return getSolutions().map((s) => ({ slug: s.slug }));
@@ -15,7 +17,11 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/solutions/[slug]">): Promise<Metadata> {
   const solution = getSolution((await params).slug);
   if (!solution) return {};
-  return { title: solution.name, description: solution.summary };
+  return pageMetadata({
+    title: `${solution.name} software`,
+    description: `${solution.summary} Ready-to-use products for ${solution.industry.toLowerCase()}, with clear pricing and support.`,
+    path: `/solutions/${solution.slug}`,
+  });
 }
 
 export default async function SolutionPage({ params }: PageProps<"/solutions/[slug]">) {
@@ -24,6 +30,13 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
   const products = getProducts({ solution: solution.slug });
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Solutions", path: "/solutions" },
+          { name: solution.name, path: `/solutions/${solution.slug}` },
+        ])}
+      />
       <CatalogHero
         eyebrow={solution.industry}
         icon={solutionIcon(solution.slug)}

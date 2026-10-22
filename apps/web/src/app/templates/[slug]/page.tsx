@@ -22,7 +22,9 @@ import { Journey } from "@/components/journey";
 import { ProductGallery } from "@/components/product-gallery";
 import { ProductPreview } from "@/components/product-preview";
 import { SectionTabs } from "@/components/section-tabs";
+import { JsonLd } from "@/components/json-ld";
 import { ShareButton } from "@/components/share-button";
+import { absoluteUrl, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import {
   getCategory,
   getCreator,
@@ -48,6 +50,12 @@ const supportLabel: Record<SupportProvider, { short: string; long: string }> = {
   "platform-and-creator": { short: "Platform + creator", long: "Supported by WIHARD and the creator." },
 };
 
+const categorySingular: Record<Product["category"], string> = {
+  websites: "website",
+  apps: "app",
+  "business-tools": "business tool",
+};
+
 const sections = [
   ["overview", "Overview"],
   ["features", "Features"],
@@ -71,7 +79,13 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/templates/[slug]">): Promise<Metadata> {
   const product = getProduct((await params).slug);
   if (!product) return {};
-  return { title: product.name, description: product.tagline };
+  return pageMetadata({
+    // e.g. "Shoply – E-commerce website": the primary tag is the keyword people search for.
+    title: `${product.name} – ${product.tags[0]} ${categorySingular[product.category]}`,
+    description: product.description,
+    path: `/templates/${product.slug}`,
+    image: { url: `/templates/${product.slug}/opengraph-image`, alt: `${product.name} on WIHARD` },
+  });
 }
 
 export default async function ProductPage({ params }: PageProps<"/templates/[slug]">) {
@@ -85,6 +99,34 @@ export default async function ProductPage({ params }: PageProps<"/templates/[slu
 
   return (
     <article className="bg-gradient-to-b from-surface to-white">
+      <JsonLd
+        data={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: product.name,
+            description: product.description,
+            category: category.name,
+            url: absoluteUrl(`/templates/${product.slug}`),
+            image: absoluteUrl(`/templates/${product.slug}/opengraph-image`),
+            brand: { "@type": "Brand", name: creator?.name ?? "WIHARD" },
+            offers: {
+              "@type": "Offer",
+              price: product.pricing.startingPrice,
+              priceCurrency: "USD",
+              url: absoluteUrl(`/templates/${product.slug}`),
+              // Purchasing opens in Phase 2; until then products are listed, not sold.
+              availability: "https://schema.org/PreOrder",
+            },
+          },
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Templates", path: "/templates" },
+            { name: category.name, path: `/templates/${category.slug}` },
+            { name: product.name, path: `/templates/${product.slug}` },
+          ]),
+        ]}
+      />
       {/* Header: FR-P01–P03, FR-P13 */}
       <Container className="py-8">
         <nav aria-label="Breadcrumb">

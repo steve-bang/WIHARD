@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Container } from "@/components/container";
 import { PageIntro } from "@/components/page-intro";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Support policy",
-  description: "Who supports what, how to reach us, and what is not covered.",
-};
+  description:
+    "WIHARD support policy: who supports each product, what is covered, response times, how to reach us, and what is not included.",
+  path: "/support-policy",
+});
 
 // Content outline: docs/ba/PRODUCT_VISION.md §5 and docs/ba/BUSINESS_REQUIREMENTS.md.
 export default function Page() {

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Sparkles } from "lucide-react";
 import { getCategory, type ProductCategory } from "@/lib/catalog";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
+import { JsonLd } from "./json-ld";
 import { CatalogHero } from "./catalog-hero";
 import { TemplatesIllustration } from "./home-illustrations";
 import { CategoryTabs } from "./category-tabs";
@@ -14,8 +16,12 @@ import { WhyTemplates } from "./why-templates";
 
 export function categoryMetadata(slug: ProductCategory): Metadata {
   const category = getCategory(slug);
-  // Filtered/sorted URLs point search engines at the unfiltered listing.
-  return { title: `${category.name} templates`, description: category.summary, alternates: { canonical: `/templates/${slug}` } };
+  // The canonical points filtered/sorted URLs at the unfiltered listing.
+  return pageMetadata({
+    title: `${category.name} templates`,
+    description: `${category.summary} Compare features, customization options, pricing, and support before you choose.`,
+    path: `/templates/${slug}`,
+  });
 }
 
 export function TemplatesListingPage({
@@ -28,6 +34,13 @@ export function TemplatesListingPage({
   const basePath = category ? `/templates/${category}` : "/templates";
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Templates", path: "/templates" },
+          ...(category ? [{ name: getCategory(category).name, path: basePath }] : []),
+        ])}
+      />
       <CatalogHero
         eyebrow={category ? getCategory(category).name : "Templates"}
         icon={Sparkles}

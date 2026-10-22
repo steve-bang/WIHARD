@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -25,10 +26,12 @@ import type { JourneyStep } from "@/lib/journey";
 // Layout follows docs/design/mockups/for-creators.png. Copy is limited to what Phase 1 delivers
 // (BR-T02): payouts open with transactions in Phase 2, and hosting/operations in Phase 3.
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "For creators",
-  description: "Publish your websites, apps, and business tools on WIHARD and reach customers who need them.",
-};
+  description:
+    "Publish your websites, apps, and business tools on WIHARD. Reach customers who need them, set your price, and get platform support.",
+  path: "/for-creators",
+});
 
 // Until the creator dashboard exists, sign-up goes through the "Build with us" form (FR-L02).
 const SIGN_UP = "/contact?topic=creator";

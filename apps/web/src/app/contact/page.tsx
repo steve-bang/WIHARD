@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Container } from "@/components/container";
 import { PageIntro } from "@/components/page-intro";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact",
-  description: "Tell us what you need and we will get back to you.",
-};
+  description:
+    "Contact WIHARD: tell us what your business needs, ask about a product, or apply to publish your own products as a creator.",
+  path: "/contact",
+});
 
 // Content outline: docs/ba/PRODUCT_VISION.md §5 and docs/ba/BUSINESS_REQUIREMENTS.md.
 export default function Page() {

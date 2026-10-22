@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Container } from "@/components/container";
 import { PageIntro } from "@/components/page-intro";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Pricing",
-  description: "What is included, and what may cost extra.",
-};
+  description:
+    "Transparent pricing on WIHARD: see what each product includes, which costs may come on top, and how licences and subscriptions work.",
+  path: "/pricing",
+});
 
 // Content outline: docs/ba/PRODUCT_VISION.md §5 and docs/ba/BUSINESS_REQUIREMENTS.md.
 export default function Page() {
