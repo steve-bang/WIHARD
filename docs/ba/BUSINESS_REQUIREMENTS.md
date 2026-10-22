@@ -5,7 +5,7 @@
 | Phiên bản | 0.1 (bản nháp đầu tiên) |
 | Ngày | 2026-10-22 |
 | Trạng thái | Draft — chờ review từ Product Owner |
-| Tài liệu liên quan | `docs/PRODUCT_VISION.md` (định hướng website công khai, sitemap) |
+| Tài liệu liên quan | `docs/ba/PRODUCT_VISION.md` (định hướng website công khai, sitemap) · `docs/architecture/ARCHITECTURE.md` (ánh xạ yêu cầu → project) |
 
 > Quy ước: **[GIẢ ĐỊNH]** là nội dung BA đề xuất dựa trên mô tả dự án, cần Product Owner xác nhận. **[CẦN QUYẾT ĐỊNH]** là điểm mở, phải chốt trước khi triển khai giai đoạn liên quan. Mức ưu tiên dùng MoSCoW: **M** (Must), **S** (Should), **C** (Could), **W** (Won't — không làm trong giai đoạn này).
 
@@ -101,7 +101,7 @@ Tài liệu này mô tả chi tiết yêu cầu cho **Giai đoạn 1 — Marketp
 
 ### 6.2 Trong phạm vi Giai đoạn 1
 
-- Website công khai theo sitemap trong `docs/PRODUCT_VISION.md` §5.
+- Website công khai theo sitemap trong `docs/ba/PRODUCT_VISION.md` §5.
 - Danh mục sản phẩm: duyệt theo loại (Websites, Apps, Business Tools) và theo giải pháp/ngành nghề.
 - Trang chi tiết sản phẩm với đầy đủ thông tin minh bạch (giá, hỗ trợ, bảo trì, creator).
 - Đăng ký / đăng nhập cho cả User và Creator.
@@ -349,7 +349,7 @@ Các nguồn doanh thu tiềm năng (chưa phải mô hình giá đã chốt):
 
 **Ràng buộc**
 - C1. Mọi nội dung công khai phải phản ánh đúng năng lực đã triển khai (BR-T02).
-- C2. Ưu tiên công nghệ ổn định, ít phụ thuộc (xem `CLAUDE.md`).
+- C2. Ưu tiên công nghệ ổn định, ít phụ thuộc (xem `docs/architecture/ARCHITECTURE.md`).
 
 ---
 

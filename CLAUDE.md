@@ -2,34 +2,33 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Current state
+## Repository layout
 
-The repository contains no application code yet — only a spec and reference images. There are no build, lint, or test commands until a project is scaffolded. When one is added, update this file with the real commands (including how to run a single test).
+WIHARD is a monorepo holding every project of the platform plus the shared business documentation:
 
-- `docs/PRODUCT_VISION.md` — the source of truth for what to build: product positioning, audiences, principles, the full sitemap, and the required sections of product detail pages. Read it before implementing anything.
-- `docs/BUSINESS_REQUIREMENTS.md` — BRD (in Vietnamese): phased scope (Phase 1 = Marketplace, no payments or working AI customization yet), functional requirements with IDs (FR-*), business rules (BR-*), platform/creator/infra responsibility matrix, and open questions awaiting the Product Owner.
-- `images/` — page screenshots (`home`, `templates`, `template-details`, `solutions`, `for-creators`, `login`) to use as visual references for the corresponding pages.
+| Path | Project | Phase |
+|---|---|---|
+| `apps/web` | Public, SEO-focused marketing and product-discovery site | 1 |
+| `apps/dashboard` | Logged-in app with User, Creator, and Admin areas | 1 |
+| `services/api` | Backend API — the only project that touches the database and enforces business rules | 1 |
+| `infra` | Infrastructure as code, CI/CD, environments | 1 |
+| `packages/*` | Shared contracts, UI, config — created once two projects need the same code | 1 |
+| `docs/` | Shared BA, architecture, and design docs read by every project | — |
 
-## What is being built
+Each project directory has its own `CLAUDE.md` with its scope and the requirements it owns. No project has been scaffolded yet, so there are no build, lint, or test commands; when scaffolding one, add its commands (including running a single test) to that project's `CLAUDE.md`, and add root-level workspace commands here.
 
-WIHARD is a public marketing/discovery website for a platform connecting software creators (vibe coders, indie hackers, studios) with non-technical customers who want to discover a product, preview it, customize it in plain language, deploy it, and keep it running. The platform — not the individual creator — is the customer's long-term point of contact.
+## Shared documentation — read before implementing
 
-## Stack (from the spec)
+- `docs/ba/BUSINESS_REQUIREMENTS.md` (Vietnamese) — the source of truth for requirements: phased scope, `FR-*` functional requirements, `BR-*` business rules, `NFR-*` non-functional requirements, the platform/creator/infra responsibility matrix, and open questions (`[CẦN QUYẾT ĐỊNH]`) still awaiting the Product Owner. `[GIẢ ĐỊNH]` marks unconfirmed assumptions.
+- `docs/ba/PRODUCT_VISION.md` — positioning, copy, public sitemap, and required sections of product detail pages.
+- `docs/architecture/ARCHITECTURE.md` (Vietnamese) — project boundaries, system flow, the requirement → project mapping table, and the proposed stack (most choices still pending a decision).
+- `docs/design/mockups/` — page screenshots used as visual references.
 
-If starting from scratch, use: Next.js (App Router), TypeScript, Tailwind CSS, Lucide icons, and a lightweight set of reusable accessible components with consistent design tokens. Keep dependencies stable and minimal. If a stack already exists, preserve it rather than replacing it.
+## Cross-project rules
 
-## Required pages
-
-All routes are listed in `docs/PRODUCT_VISION.md` §5. In short: `/`, `/how-it-works`, `/templates` (+ `/websites`, `/apps`, `/business-tools`), `/templates/[slug]` (dynamic, driven by realistic sample data), `/solutions` (+ `/garage-management`, `/customer-management`, `/booking-management`), `/for-creators`, `/pricing`, `/security`, `/support-policy`, `/about`, `/contact`.
-
-The `/templates/[slug]` page must cover every section enumerated in the spec (preview, demo CTA, customization workflow, deployment, pricing and extra costs, support level, maintenance, creator info, version history, FAQ, related products, "Make it yours" CTA) and should make products easy to compare. Model the sample product data so that categories, solution pages, and detail pages all draw from the same source.
-
-## Copy and content rules
-
-- Headline: "Build software for your work, without coding." Supporting: "Discover it. Make it yours. Put it to work." CTAs: "Explore templates" (primary), "How it works" (secondary), "Build with us" (creators).
-- Use transparent, credible language: never imply infinite customization, free coverage of every problem, or capabilities that don't exist. Pricing must state what's included and what may cost extra; support levels must be explicit.
-- Creator profiles build trust but must not be presented as the only support route.
-
-## Working conventions
-
-The spec asks that routine implementation decisions be made without asking for approval — make sensible choices, document important assumptions, and proceed.
+- Requirements live only in `docs/ba/`; don't copy them into project folders. Reference requirement IDs (e.g. `FR-P07`, `BR-T01`) in PR titles or descriptions.
+- When a requirement changes, update `docs/ba/` before or in the same PR as the code.
+- Only `services/api` accesses the database. Business rules (BRD §9) and the product status lifecycle (BRD §10.3) are enforced in the API; frontends may pre-validate but are never the only check.
+- Keep commits and PRs scoped to one project unless changing a shared contract.
+- Phase 1 has no payments and no working AI customization. Never present unbuilt capabilities as available in UI or copy (`BR-T02`).
+- Record decided technical choices as ADRs in `docs/architecture/adr/NNNN-title.md` and update the stack table in `ARCHITECTURE.md`.
