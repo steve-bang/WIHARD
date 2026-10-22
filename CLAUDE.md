@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 The repository contains no application code yet — only a spec and reference images. There are no build, lint, or test commands until a project is scaffolded. When one is added, update this file with the real commands (including how to run a single test).
 
 - `docs/PRODUCT_VISION.md` — the source of truth for what to build: product positioning, audiences, principles, the full sitemap, and the required sections of product detail pages. Read it before implementing anything.
+- `docs/BUSINESS_REQUIREMENTS.md` — BRD (in Vietnamese): phased scope (Phase 1 = Marketplace, no payments or working AI customization yet), functional requirements with IDs (FR-*), business rules (BR-*), platform/creator/infra responsibility matrix, and open questions awaiting the Product Owner.
 - `images/` — page screenshots (`home`, `templates`, `template-details`, `solutions`, `for-creators`, `login`) to use as visual references for the corresponding pages.
 
 ## What is being built
