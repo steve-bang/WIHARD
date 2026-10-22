@@ -40,8 +40,8 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="overflow-hidden bg-gradient-to-br from-white via-brand-50/60 to-brand-100/60">
-        <Container className="grid items-center gap-12 py-16 lg:grid-cols-2 lg:py-20">
+      <section className="overflow-hidden bg-white bg-[radial-gradient(ellipse_at_80%_20%,var(--color-brand-100),transparent_55%)]">
+        <Container className="grid items-center gap-10 py-12 lg:grid-cols-[1fr_1.1fr] lg:py-14">
           <div>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700">
               <Zap aria-hidden className="size-3" /> No coding required
@@ -49,8 +49,8 @@ export default function Home() {
             <h1 className="mt-5 text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-[3.4rem]">
               Build software for your work, <span className="text-brand-600">without coding.</span>
             </h1>
-            <p className="mt-5 text-lg text-ink/80">{siteConfig.tagline}</p>
-            <SearchForm className="mt-8 max-w-md" />
+            <p className="mt-4 text-lg text-ink/80">{siteConfig.tagline}</p>
+            <SearchForm className="mt-7 max-w-[520px]" />
             <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
               <span className="font-medium text-muted">Popular:</span>
               {popular.map((p) => (
@@ -67,7 +67,7 @@ export default function Home() {
       </section>
 
       {/* Highlights */}
-      <Container className="grid gap-8 py-14 sm:grid-cols-2 lg:grid-cols-4">
+      <Container className="grid gap-8 py-10 sm:grid-cols-2 lg:grid-cols-4">
         {highlights.map(({ icon: Icon, title, text }) => (
           <div key={title} className="flex gap-4">
             <Icon aria-hidden className="size-6 shrink-0 text-brand-600" />
@@ -80,8 +80,8 @@ export default function Home() {
       </Container>
 
       {/* Popular templates */}
-      <Container className="py-12">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+      <Container className="py-8">
+        <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
           <div>
             <Eyebrow>Popular templates</Eyebrow>
             <h2 className="mt-2 text-2xl font-bold sm:text-3xl">
@@ -89,17 +89,17 @@ export default function Home() {
               <br />
               for every business need
             </h2>
-            <p className="mt-3 max-w-md text-sm text-muted">
+            <p className="mt-2 max-w-md text-sm text-muted">
               Get started with ready-made templates. Customize them to fit your workflow and make them your own.
             </p>
             <Link
               href="/templates"
-              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white hover:bg-brand-700"
+              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white hover:bg-brand-700"
             >
               Browse all templates <ArrowRight aria-hidden className="size-4" />
             </Link>
           </div>
-          <Link href="/templates" className="flex items-center gap-1 text-sm font-medium text-brand-600">
+          <Link href="/templates" className="mt-8 flex items-center gap-1 text-sm font-medium text-brand-600">
             View all templates <ArrowRight aria-hidden className="size-4" />
           </Link>
         </div>
@@ -107,9 +107,9 @@ export default function Home() {
       </Container>
 
       {/* How it works */}
-      <Container className="py-12">
-        <div className="rounded-2xl bg-surface p-8 sm:p-10">
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+      <Container className="py-6">
+        <div className="rounded-2xl bg-brand-50/60 p-8">
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
             <div>
               <Eyebrow>How it works</Eyebrow>
               <h2 className="mt-2 text-2xl font-bold">From idea to live in 4 simple steps</h2>
@@ -124,7 +124,7 @@ export default function Home() {
 
       {/* For creators */}
       <Container className="py-6">
-        <div className="grid items-center gap-10 rounded-2xl bg-gradient-to-r from-brand-50 to-brand-100 p-8 sm:p-12 lg:grid-cols-2">
+        <div className="grid items-center gap-10 rounded-2xl bg-gradient-to-r from-brand-50/80 via-brand-50 to-brand-100/70 px-8 py-6 sm:px-12 lg:grid-cols-2">
           <div>
             <Eyebrow>For creators</Eyebrow>
             <h2 className="mt-2 text-2xl font-bold sm:text-3xl">
@@ -132,12 +132,12 @@ export default function Home() {
               <br />
               Build your audience.
             </h2>
-            <p className="mt-3 max-w-sm text-muted">
+            <p className="mt-3 max-w-sm text-sm text-muted">
               Turn your vibe coding projects into real products. Reach more users and earn from your creations.
             </p>
             <Link
               href="/for-creators"
-              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-ink px-5 py-3 text-sm font-medium text-white"
+              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-ink px-5 py-2.5 text-sm font-medium text-white"
             >
               Become a creator <ArrowRight aria-hidden className="size-4" />
             </Link>
@@ -153,13 +153,13 @@ export default function Home() {
       </Container>
 
       {/* Why WIHARD */}
-      <Container className="py-16 text-center">
+      <Container className="pb-12 pt-6 text-center">
         <Eyebrow>Why WIHARD</Eyebrow>
-        <h2 className="mt-2 text-2xl font-bold">The trusted platform for creators and users</h2>
+        <h2 className="mt-1 text-2xl font-bold">The trusted platform for creators and users</h2>
         <p className="mx-auto mt-2 max-w-xl text-sm text-muted">
           More than a marketplace: the central point of contact for finding, owning, and running your software.
         </p>
-        <div className="mt-10 grid gap-8 text-left sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto mt-8 grid max-w-4xl gap-8 text-left sm:grid-cols-2 lg:grid-cols-4">
           {reasons.map(({ icon: Icon, title, text }) => (
             <div key={title} className="flex gap-3">
               <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-50">

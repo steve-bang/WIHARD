@@ -33,13 +33,13 @@ export function HeroIllustration({
   cards?: ShowcaseCard[];
 }) {
   return (
-    <div aria-hidden className="relative mx-auto h-[400px] w-full max-w-[520px]">
+    <div aria-hidden className="relative mx-auto h-[400px] w-full max-w-[580px]">
       {cards.slice(0, cardSlots.length).map((c, i) => (
         <FloatingCard key={c.title} {...c} className={cardSlots[i]} />
       ))}
 
       {/* Desktop dashboard */}
-      <div className="absolute left-0 top-24 flex h-56 w-[400px] overflow-hidden rounded-xl border border-line bg-white shadow-xl">
+      <div className="absolute left-0 top-24 flex h-60 w-[440px] overflow-hidden rounded-xl border border-line bg-white shadow-xl">
         <div className="w-20 space-y-2 border-r border-line p-3">
           <div className="h-2 w-12 rounded bg-ink/80" />
           {[0, 1, 2, 3, 4, 5].map((i) => (
@@ -48,6 +48,7 @@ export function HeroIllustration({
         </div>
         <div className="flex-1 space-y-3 p-4">
           <p className="text-sm font-bold">Your Business, Your Way</p>
+          <div className="-mt-2 h-1 w-32 rounded bg-surface" />
           <div className="grid grid-cols-3 gap-2">
             {["$24.5k", "1,248", "87"].map((v) => (
               <div key={v} className="rounded-md border border-line p-2">
@@ -56,21 +57,33 @@ export function HeroIllustration({
               </div>
             ))}
           </div>
-          <svg viewBox="0 0 200 60" className="h-20 w-full">
-            <defs>
-              <linearGradient id="area" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0" stopColor="#2dd4bf" stopOpacity=".6" />
-                <stop offset="1" stopColor="#2dd4bf" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path d="M0 50 L25 40 L50 44 L75 28 L100 34 L125 18 L150 24 L175 10 L200 14 V60 H0Z" fill="url(#area)" />
-            <path d="M0 50 L25 40 L50 44 L75 28 L100 34 L125 18 L150 24 L175 10 L200 14" fill="none" stroke="#14b8a6" strokeWidth="1.5" />
-          </svg>
+          <div className="grid grid-cols-[1.4fr_1fr] gap-3">
+            <svg viewBox="0 0 120 60" className="h-24 w-full">
+              <defs>
+                <linearGradient id="area" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0" stopColor="#2dd4bf" stopOpacity=".7" />
+                  <stop offset="1" stopColor="#2dd4bf" stopOpacity=".05" />
+                </linearGradient>
+              </defs>
+              {[34, 28, 40, 22, 30, 16, 26, 12, 20, 8, 18, 6].map((y, i) => (
+                <rect key={i} x={i * 10 + 1} y={y} width="7" height={60 - y} rx="1" fill="url(#area)" />
+              ))}
+              <path d="M5 34 L15 28 L25 40 L35 22 L45 30 L55 16 L65 26 L75 12 L85 20 L95 8 L105 18 L115 6" fill="none" stroke="#14b8a6" strokeWidth="1.2" />
+            </svg>
+            <div className="space-y-2 pt-1">
+              {[0, 1, 2, 3, 4].map((i) => (
+                <div key={i} className="flex items-center justify-between gap-2">
+                  <span className="h-1 w-10 rounded bg-surface" />
+                  <span className={`h-1 w-5 rounded ${i % 2 ? "bg-emerald-200" : "bg-rose-200"}`} />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Phone */}
-      <div className="absolute right-6 top-36 h-56 w-28 rounded-[1.4rem] border-4 border-ink bg-white p-2 shadow-xl">
+      <div className="absolute right-10 top-32 h-60 w-32 rounded-[1.4rem] border-4 border-ink bg-white p-2 shadow-xl">
         <div className="mx-auto h-1 w-8 rounded bg-ink" />
         <p className="mt-3 text-center text-[10px] font-bold leading-tight">Your Business, Your Way</p>
         <div className="mx-auto mt-2 h-1.5 w-10 rounded bg-brand-600" />

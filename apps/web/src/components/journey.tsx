@@ -42,13 +42,15 @@ export function Journey({
                     <Icon aria-hidden className="size-5 text-brand-600" />
                   </span>
                 </div>
-                <h3 className="mt-4 font-semibold">{title}</h3>
+                <h3 className="mt-3 pl-10 font-semibold">{title}</h3>
               </>
             )}
-            <p className={`mt-1 text-muted ${stacked ? "text-xs" : "text-sm"}`}>{text}</p>
-            {!available && (
-              <span className="mt-2 inline-block rounded bg-white px-1.5 py-0.5 text-xs text-muted">Coming later</span>
-            )}
+            <div className={stacked ? "" : "pl-10"}>
+              <p className={`mt-1 text-muted ${stacked ? "text-xs" : "text-sm"}`}>{text}</p>
+              {!available && (
+                <span className="mt-2 inline-block rounded bg-white px-1.5 py-0.5 text-xs text-muted">Coming later</span>
+              )}
+            </div>
           </li>
         </Fragment>
       ))}

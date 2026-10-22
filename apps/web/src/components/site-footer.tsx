@@ -6,7 +6,7 @@ import { Logo } from "./logo";
 export function SiteFooter() {
   return (
     <footer className="mt-auto bg-ink text-slate-300">
-      <Container className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
+      <Container className="grid gap-10 py-8 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
         <div>
           <Logo className="text-white" />
           <p className="mt-3 max-w-56 text-sm">{siteConfig.headline}</p>
@@ -26,8 +26,8 @@ export function SiteFooter() {
           </div>
         ))}
       </Container>
-      <Container className="pb-6 text-xs">
-        <p className="border-t border-white/10 pt-6">
+      <Container className="pb-5 text-xs">
+        <p className="border-t border-white/10 pt-5">
           © {siteConfig.copyrightYear} {siteConfig.name}. All rights reserved.
         </p>
       </Container>

@@ -11,7 +11,7 @@ export function NavLink({ href, children }: { href: string; children: React.Reac
     <Link
       href={href}
       aria-current={current ? "page" : undefined}
-      className={`border-b-2 py-5 hover:text-brand-600 ${current ? "border-brand-600 text-brand-600" : "border-transparent"}`}
+      className={`border-b-2 py-[18px] hover:text-brand-600 ${current ? "border-brand-600 text-brand-600" : "border-transparent"}`}
     >
       {children}
     </Link>

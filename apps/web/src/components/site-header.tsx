@@ -9,7 +9,7 @@ import { NavLink } from "./nav-link";
 export function SiteHeader() {
   return (
     <header className="relative z-20 border-b border-line bg-white">
-      <Container className="flex h-16 items-center gap-8">
+      <Container className="flex h-14 items-center gap-10">
         <Logo />
         <nav aria-label="Main" className="hidden items-center gap-7 text-sm font-medium text-ink/80 md:flex">
           {mainNav.map((item) => (
@@ -46,7 +46,7 @@ export function SiteHeader() {
             <summary aria-label="Menu" className="cursor-pointer list-none">
               <Menu className="size-6" />
             </summary>
-            <nav aria-label="Mobile" className="absolute inset-x-0 top-16 border-b border-line bg-white p-4 shadow-lg">
+            <nav aria-label="Mobile" className="absolute inset-x-0 top-14 border-b border-line bg-white p-4 shadow-lg">
               <ul className="space-y-1 text-sm font-medium">
                 {[...mainNav, ...resourcesNav].map((item) => (
                   <li key={item.href}>

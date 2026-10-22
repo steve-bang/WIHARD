@@ -11,7 +11,7 @@ export function ProductCard({ product }: { product: Product }) {
       href={`/templates/${product.slug}`}
       className="group flex flex-col overflow-hidden rounded-xl border border-line bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
     >
-      <ProductPreview product={product} className="h-36" />
+      <ProductPreview product={product} className="h-32" />
       <div className="flex flex-1 flex-col p-4">
         <span className="w-fit rounded bg-brand-50 px-2 py-0.5 text-xs font-medium text-brand-700">
           {getCategory(product.category).name}
