@@ -20,6 +20,8 @@ Set `NEXT_PUBLIC_SITE_URL` for production so canonical URLs, `sitemap.xml`, and 
 
 - `src/lib/catalog/` — product, creator, and solution sample data plus query functions. Every page reads data only through `src/lib/catalog/index.ts`, so swapping in `services/api` calls later changes one module. `types.ts` mirrors the detail-page requirements (FR-P01–P13) and will move to `packages/contracts`.
 - `src/lib/site.ts` — site config, navigation, and the static route list used by `app/sitemap.ts`. Add new public routes there.
+- Search (FR-D03) is a plain GET form to `/templates?q=`; the page reads `searchParams` inside `<Suspense>`, as Cache Components requires.
+- `src/components/home-illustrations.tsx` and `product-preview.tsx` draw decorative mock-ups in HTML/SVG; the homepage layout follows `docs/design/mockups/home.png`.
 - `src/lib/journey.ts` — the Discover/Customize/Deploy/Operate steps with an `available` flag; flip it as phases ship.
 - `src/app/templates/[slug]` and `src/app/solutions/[slug]` — prerendered via `generateStaticParams`. With Cache Components, `dynamicParams` is unavailable; unknown slugs call `notFound()` (streamed with HTTP 200 + `noindex`).
 - `src/app/templates/{websites,apps,business-tools}` — thin wrappers around `components/category-page.tsx`; static folders take precedence over `[slug]`.
@@ -34,4 +36,4 @@ Set `NEXT_PUBLIC_SITE_URL` for production so canonical URLs, `sitemap.xml`, and 
 
 ## Not done yet
 
-Interest/contact forms (FR-L01–L02, need `services/api`), search and filters (FR-D03–D06), public creator profile pages, mobile navigation menu, real screenshots (placeholders render when `screenshots[].src` is empty), analytics events (NFR-10).
+Interest/contact forms (FR-L01–L02, need `services/api`), filters, sorting and comparison (FR-D04–D06), public creator profile pages, sign-in (owned by `apps/dashboard`), newsletter signup, real screenshots (placeholders render when `screenshots[].src` is empty), analytics events (NFR-10).

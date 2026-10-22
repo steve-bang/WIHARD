@@ -17,6 +17,26 @@ export function getProducts(filter: { category?: ProductCategory; solution?: str
   );
 }
 
+// FR-D03: keyword search over name, description, features, category, and solutions.
+export function searchProducts(query: string): Product[] {
+  const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+  if (terms.length === 0) return products;
+  return products.filter((p) => {
+    const haystack = [
+      p.name,
+      p.tagline,
+      p.description,
+      ...p.features,
+      ...p.audience,
+      getCategory(p.category).name,
+      ...p.solutions.map((s) => getSolution(s)?.name ?? ""),
+    ]
+      .join(" ")
+      .toLowerCase();
+    return terms.every((t) => haystack.includes(t));
+  });
+}
+
 export function getProduct(slug: string) {
   return products.find((p) => p.slug === slug);
 }

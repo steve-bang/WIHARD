@@ -6,10 +6,10 @@ import { Logo } from "./logo";
 export function SiteFooter() {
   return (
     <footer className="mt-auto bg-ink text-slate-300">
-      <Container className="grid gap-10 py-12 md:grid-cols-4">
+      <Container className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
         <div>
           <Logo className="text-white" />
-          <p className="mt-3 text-sm">{siteConfig.headline}</p>
+          <p className="mt-3 max-w-56 text-sm">{siteConfig.headline}</p>
         </div>
         {footerNav.map((group) => (
           <div key={group.title}>
@@ -25,6 +25,11 @@ export function SiteFooter() {
             </ul>
           </div>
         ))}
+      </Container>
+      <Container className="pb-6 text-xs">
+        <p className="border-t border-white/10 pt-6">
+          © {siteConfig.copyrightYear} {siteConfig.name}. All rights reserved.
+        </p>
       </Container>
     </footer>
   );

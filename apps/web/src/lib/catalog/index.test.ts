@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { products } from "./data";
-import { getCreator, getProduct, getProducts, getRelatedProducts, getSolution } from "./index";
+import { getCreator, getProduct, getProducts, getRelatedProducts, getSolution, searchProducts } from "./index";
 
 describe("catalog", () => {
   it("filters by category and solution", () => {
@@ -9,6 +9,14 @@ describe("catalog", () => {
       "garage-management-website",
       "booking-system",
     ]);
+  });
+
+  it("searches across fields and requires every term", () => {
+    expect(searchProducts("crm").map((p) => p.slug)).toEqual(["customer-management-crm"]);
+    expect(searchProducts("Garage").map((p) => p.slug)).toEqual(["garage-management-website"]);
+    expect(searchProducts("booking website").map((p) => p.slug)).toEqual(["garage-management-website"]);
+    expect(searchProducts("  ")).toHaveLength(products.length);
+    expect(searchProducts("nothing-matches")).toEqual([]);
   });
 
   it("excludes the product itself from related products", () => {
