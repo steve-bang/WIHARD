@@ -41,9 +41,10 @@ export interface Product {
   category: ProductCategory;
   solutions: string[];
   status: ProductStatus;
+  tags: string[];
   screenshots: { src: string; alt: string }[];
   demoUrl?: string;
-  features: string[];
+  features: { title: string; description: string }[];
   audience: string[];
   customization: {
     allowed: string[];

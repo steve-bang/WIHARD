@@ -1,19 +1,40 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, Check, ExternalLink, X } from "lucide-react";
+import {
+  ArrowRight,
+  ChartColumn,
+  Check,
+  ChevronDown,
+  ChevronRight,
+  ExternalLink,
+  Headphones,
+  Layers,
+  ListChecks,
+  ShieldCheck,
+  SlidersHorizontal,
+  Workflow,
+  X,
+} from "lucide-react";
+import { Avatar } from "@/components/avatar";
 import { Container } from "@/components/container";
-import { ProductGrid } from "@/components/product-card";
+import { Journey } from "@/components/journey";
+import { ProductGallery } from "@/components/product-gallery";
 import { ProductPreview } from "@/components/product-preview";
+import { SectionTabs } from "@/components/section-tabs";
+import { ShareButton } from "@/components/share-button";
 import {
   getCategory,
   getCreator,
   getProduct,
   getProducts,
   getRelatedProducts,
+  type Product,
   type ProductStatus,
   type SupportProvider,
 } from "@/lib/catalog";
+
+// Layout follows docs/design/mockups/template-details.png; content covers FR-P01–P13.
 
 const statusLabel: Record<ProductStatus, string> = {
   active: "Active",
@@ -21,14 +42,15 @@ const statusLabel: Record<ProductStatus, string> = {
   deprecated: "No longer developed",
 };
 
-const supportLabel: Record<SupportProvider, string> = {
-  platform: "WIHARD",
-  creator: "The creator, with WIHARD as your point of contact",
-  "platform-and-creator": "WIHARD and the creator",
+const supportLabel: Record<SupportProvider, { short: string; long: string }> = {
+  platform: { short: "Platform", long: "Supported by WIHARD." },
+  creator: { short: "Creator", long: "Fixed by the creator, with WIHARD as your point of contact." },
+  "platform-and-creator": { short: "Platform + creator", long: "Supported by WIHARD and the creator." },
 };
 
 const sections = [
   ["overview", "Overview"],
+  ["features", "Features"],
   ["customization", "Customization"],
   ["deployment", "Deployment"],
   ["pricing", "Pricing"],
@@ -36,6 +58,11 @@ const sections = [
   ["updates", "Updates"],
   ["faq", "FAQ"],
 ] as const;
+
+const featureIcons = [Layers, Workflow, ListChecks, ChartColumn];
+
+const formatDate = (iso: string) =>
+  new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeZone: "UTC" }).format(new Date(iso));
 
 export function generateStaticParams() {
   return getProducts().map((p) => ({ slug: p.slug }));
@@ -52,35 +79,82 @@ export default async function ProductPage({ params }: PageProps<"/templates/[slu
   if (!product) notFound();
   const category = getCategory(product.category);
   const creator = getCreator(product.creatorSlug);
-  const related = getRelatedProducts(product);
+  const support = supportLabel[product.support.provider];
+  const price = product.pricing.included[0];
+  const gallery = { name: product.name, category: product.category, screenshots: product.screenshots };
 
   return (
-    <article>
-      <Container className="py-10">
-        <nav aria-label="Breadcrumb" className="text-sm text-muted">
-          <Link href="/templates">Templates</Link> / <Link href={`/templates/${category.slug}`}>{category.name}</Link> /{" "}
-          <span className="text-ink">{product.name}</span>
+    <article className="bg-gradient-to-b from-surface to-white">
+      {/* Header: FR-P01–P03, FR-P13 */}
+      <Container className="py-8">
+        <nav aria-label="Breadcrumb">
+          <ol className="flex flex-wrap items-center gap-1.5 text-xs text-muted">
+            {[
+              ["/", "Home"],
+              ["/templates", "Templates"],
+              [`/templates/${category.slug}`, category.name],
+            ].map(([href, label]) => (
+              <li key={href} className="flex items-center gap-1.5">
+                <Link href={href} className="hover:text-ink">
+                  {label}
+                </Link>
+                <ChevronRight aria-hidden className="size-3" />
+              </li>
+            ))}
+            <li aria-current="page" className="text-ink">
+              {product.name}
+            </li>
+          </ol>
         </nav>
 
-        {/* FR-P01–P03, FR-P13 */}
-        <div className="mt-6 grid gap-10 lg:grid-cols-2">
-          <ProductPreview product={product} className="aspect-video rounded-2xl" />
+        <div className="mt-6 grid gap-10 lg:grid-cols-[1.15fr_1fr]">
+          <ProductGallery
+            product={gallery}
+            badge={
+              <span className="flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-brand-600 shadow-sm">
+                <ShieldCheck aria-hidden className="size-4" /> Reviewed
+              </span>
+            }
+          />
+
           <div>
             <div className="flex gap-2 text-xs font-medium">
               <span className="rounded bg-brand-50 px-2 py-0.5 text-brand-700">{category.name}</span>
-              <span className="rounded bg-surface px-2 py-0.5 text-muted">{statusLabel[product.status]}</span>
+              {product.status !== "active" && (
+                <span className="rounded bg-amber-50 px-2 py-0.5 text-amber-700">{statusLabel[product.status]}</span>
+              )}
             </div>
             <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">{product.name}</h1>
             <p className="mt-3 text-lg text-muted">{product.tagline}</p>
-            <p className="mt-6 text-2xl font-bold">
-              {product.pricing.included[0].amount}
-              <span className="ml-2 text-sm font-normal text-muted">{product.pricing.included[0].note}</span>
+            <ul className="mt-4 flex flex-wrap gap-2" aria-label="Tags">
+              {product.tags.map((t) => (
+                <li key={t} className="rounded-md bg-brand-50 px-2.5 py-1 text-xs text-ink/80">
+                  {t}
+                </li>
+              ))}
+            </ul>
+
+            <ul className="mt-6 grid gap-4 sm:grid-cols-3">
+              <Trust icon={SlidersHorizontal} title="Customizable" text={`${product.customization.allowed.length} options listed below`} />
+              <Trust icon={ShieldCheck} title="Reviewed product" text="Quality checked by WIHARD" />
+              <Trust icon={Headphones} title={`${support.short} support`} text={product.support.responseTime} />
+            </ul>
+
+            <p className="mt-6 text-3xl font-bold">
+              {price.amount}
+              {price.note && <span className="ml-1 text-sm font-normal text-muted">/ {price.note.toLowerCase()}</span>}
             </p>
-            <p className="text-sm text-muted">Additional costs may apply — see pricing below.</p>
+            <p className="text-sm text-muted">
+              Additional costs may apply.{" "}
+              <a href="#pricing" className="text-brand-600 underline">
+                See full pricing
+              </a>
+            </p>
+
             <div className="mt-6 flex flex-wrap gap-3">
               <Link
                 href={`/contact?product=${product.slug}`}
-                className="flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-3 font-medium text-white hover:bg-brand-700"
+                className="flex items-center gap-2 rounded-lg bg-brand-600 px-6 py-3 text-sm font-medium text-white hover:bg-brand-700"
               >
                 Make it yours <ArrowRight aria-hidden className="size-4" />
               </Link>
@@ -89,161 +163,237 @@ export default async function ProductPage({ params }: PageProps<"/templates/[slu
                   href={product.demoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 rounded-lg border border-brand-600 px-5 py-3 font-medium text-brand-600"
+                  className="flex items-center gap-2 rounded-lg border border-brand-600 px-6 py-3 text-sm font-medium text-brand-600 hover:bg-brand-50"
                 >
                   Live demo <ExternalLink aria-hidden className="size-4" />
                 </a>
               )}
             </div>
-            {creator && (
-              <p className="mt-6 text-sm text-muted">
-                By <span className="font-medium text-ink">{creator.name}</span> · Last updated {product.versions[0].date}
-              </p>
-            )}
+
+            <div className="mt-8 flex items-center justify-between gap-4">
+              {creator && (
+                <div className="flex items-center gap-3 text-xs">
+                  <Avatar name={creator.name} className="size-9 text-xs" />
+                  <div>
+                    <p className="font-medium">By {creator.name}</p>
+                    <p className="text-muted">Last updated {formatDate(product.versions[0].date)}</p>
+                  </div>
+                </div>
+              )}
+              <ShareButton title={product.name} />
+            </div>
           </div>
         </div>
       </Container>
 
-      <nav aria-label="Sections" className="sticky top-0 z-10 border-y border-line bg-white/95 backdrop-blur">
-        <Container className="flex gap-6 overflow-x-auto py-3 text-sm text-muted">
-          {sections.map(([id, label]) => (
-            <a key={id} href={`#${id}`} className="whitespace-nowrap hover:text-ink">
-              {label}
-            </a>
-          ))}
-        </Container>
-      </nav>
+      <SectionTabs sections={sections} />
 
-      <Container className="space-y-14 py-12">
-        {/* FR-P04 */}
-        <Section id="overview" title="Overview">
-          <p className="max-w-3xl text-muted">{product.description}</p>
-          <div className="mt-6 grid gap-6 md:grid-cols-2">
-            <List title="Main features" items={product.features} />
-            <List title="Who it's for" items={product.audience} />
+      <Container className="space-y-16 py-12">
+        {/* FR-P04, FR-P05 */}
+        <div className="grid gap-10 lg:grid-cols-[2fr_1fr]">
+          <section id="overview" className="scroll-mt-20">
+            <h2 className="text-2xl font-bold">Overview</h2>
+            <p className="mt-3 max-w-2xl text-muted">{product.description}</p>
+            <p className="mt-3 text-sm">
+              <span className="font-medium">Best for:</span>{" "}
+              <span className="text-muted">{product.audience.join(", ")}</span>
+            </p>
+            <ul id="features" className="mt-8 grid scroll-mt-20 gap-6 sm:grid-cols-2 xl:grid-cols-4">
+              {product.features.map((f, i) => {
+                const Icon = featureIcons[i % featureIcons.length];
+                return (
+                  <li key={f.title}>
+                    <Icon aria-hidden className="size-7 text-brand-600" />
+                    <h3 className="mt-3 text-sm font-semibold">{f.title}</h3>
+                    <p className="mt-1 text-sm text-muted">{f.description}</p>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+
+          <section id="customization" className="scroll-mt-20 rounded-2xl bg-surface p-6">
+            <h2 className="font-semibold">What you can customize</h2>
+            <CheckList items={product.customization.allowed} />
+            {product.customization.notAllowed.length > 0 && (
+              <>
+                <h3 className="mt-6 text-sm font-semibold">Not supported</h3>
+                <CheckList items={product.customization.notAllowed} negative />
+              </>
+            )}
+          </section>
+        </div>
+
+        <section className="rounded-2xl bg-surface p-8">
+          <h2 className="text-xl font-bold">How it works</h2>
+          <p className="mb-8 mt-1 text-sm text-muted">From finding {product.name} to putting it to work.</p>
+          <Journey />
+        </section>
+
+        {/* Screenshots + FR-P08, FR-P09, FR-P10 */}
+        <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr]">
+          <section>
+            <h2 className="mb-4 text-xl font-bold">Screenshots</h2>
+            <ProductGallery product={gallery} orientation="vertical" />
+          </section>
+
+          <div className="space-y-6">
+            <section id="support" className="scroll-mt-20">
+              <h2 className="mb-4 text-xl font-bold">Support &amp; Updates</h2>
+              <dl className="divide-y divide-line rounded-2xl border border-line bg-white">
+                <SupportRow term="Support level" badge={support.short}>
+                  {support.long} Covers {product.support.coverage.join(", ").toLowerCase()}. Response{" "}
+                  {product.support.responseTime.toLowerCase()}, for {product.support.duration.toLowerCase()}.
+                </SupportRow>
+                <SupportRow term="Updates" badge="Included" tone="green">
+                  Version updates during the support period.
+                </SupportRow>
+                <SupportRow term="Maintenance" badge={product.status === "beta" ? "Beta" : support.short}>
+                  {product.maintenance}
+                </SupportRow>
+              </dl>
+              <p className="mt-3 text-xs text-muted">
+                You can always contact WIHARD directly — see our{" "}
+                <Link href="/support-policy" className="text-brand-600 underline">
+                  support policy
+                </Link>
+                .
+              </p>
+            </section>
+
+            {creator && (
+              <section className="rounded-2xl border border-line bg-white p-6">
+                <h2 className="font-bold">Creator</h2>
+                <div className="mt-4 flex gap-4">
+                  <Avatar name={creator.name} className="size-12 text-sm" />
+                  <div>
+                    <p className="font-semibold">{creator.name}</p>
+                    <p className="mt-1 text-sm text-muted">{creator.bio}</p>
+                    <p className="mt-2 text-xs text-muted">{creator.skills.join(" · ")}</p>
+                  </div>
+                </div>
+              </section>
+            )}
           </div>
-        </Section>
+        </div>
 
-        {/* FR-P05, BR-T03 */}
-        <Section id="customization" title="What you can customize">
-          <div className="grid gap-6 md:grid-cols-2">
-            <List title="Included" items={product.customization.allowed} icon="check" />
-            <List title="Not supported" items={product.customization.notAllowed} icon="x" />
-          </div>
-          <p className="mt-4 text-sm text-muted">
-            Customization in plain language with AI assistance opens in a later phase. Until then, describe what you
-            need when you register your interest.
-          </p>
-        </Section>
+        {/* FR-P06, FR-P07 (BR-T01) */}
+        <div className="grid gap-6 lg:grid-cols-[1fr_2fr]">
+          <section id="deployment" className="scroll-mt-20 rounded-2xl border border-line bg-white p-6">
+            <h2 className="text-xl font-bold">Deployment &amp; hosting</h2>
+            <p className="mt-3 text-sm text-muted">{product.deployment}</p>
+          </section>
+          <section id="pricing" className="scroll-mt-20 rounded-2xl border border-line bg-white p-6">
+            <h2 className="text-xl font-bold">Pricing</h2>
+            <div className="mt-4 grid gap-6 sm:grid-cols-2">
+              <PriceList title="Included in the price" items={product.pricing.included} />
+              <PriceList title="Possible additional costs" items={product.pricing.possibleExtras} />
+            </div>
+          </section>
+        </div>
 
-        {/* FR-P06 */}
-        <Section id="deployment" title="Deployment and hosting">
-          <p className="text-muted">{product.deployment}</p>
-        </Section>
-
-        {/* FR-P07, BR-T01 */}
-        <Section id="pricing" title="Pricing">
-          <div className="grid gap-6 md:grid-cols-2">
-            <PriceTable title="Included in the price" items={product.pricing.included} />
-            <PriceTable title="Possible additional costs" items={product.pricing.possibleExtras} />
-          </div>
-        </Section>
-
-        {/* FR-P08, BR-T04, BR-T05 */}
-        <Section id="support" title="Support">
-          <dl className="grid gap-4 sm:grid-cols-2">
-            <Fact term="Provided by" value={supportLabel[product.support.provider]} />
-            <Fact term="Covers" value={product.support.coverage.join(", ")} />
-            <Fact term="Response time" value={product.support.responseTime} />
-            <Fact term="Duration" value={product.support.duration} />
-          </dl>
-          <p className="mt-4 text-sm text-muted">
-            You can always reach WIHARD directly through our{" "}
-            <Link href="/support-policy" className="text-brand-600 underline">
-              support policy
-            </Link>{" "}
-            channels.
-          </p>
-        </Section>
-
-        {/* FR-P09–P11 */}
-        <Section id="updates" title="Updates and maintenance">
-          <p className="text-muted">{product.maintenance}</p>
-          <ol className="mt-4 space-y-3">
+        {/* FR-P11 */}
+        <section id="updates" className="scroll-mt-20">
+          <h2 className="mb-4 text-xl font-bold">Version history</h2>
+          <ol className="space-y-4 border-l-2 border-brand-100 pl-6">
             {product.versions.map((v) => (
-              <li key={v.version} className="text-sm">
-                <span className="font-semibold">v{v.version}</span> <span className="text-muted">· {v.date}</span>
-                <p className="text-muted">{v.notes}</p>
+              <li key={v.version} className="relative">
+                <span className="absolute -left-[31px] top-1.5 size-3 rounded-full bg-brand-600" />
+                <p className="text-sm">
+                  <span className="font-semibold">v{v.version}</span>
+                  <span className="text-muted"> · {formatDate(v.date)}</span>
+                </p>
+                <p className="text-sm text-muted">{v.notes}</p>
               </li>
             ))}
           </ol>
-          {creator && (
-            <div className="mt-6 rounded-xl border border-line p-5">
-              <h3 className="font-semibold">About the creator: {creator.name}</h3>
-              <p className="mt-1 text-sm text-muted">{creator.bio}</p>
-            </div>
-          )}
-        </Section>
+        </section>
 
         {/* FR-P12 */}
-        <Section id="faq" title="FAQ">
-          <dl className="space-y-4">
+        <section id="faq" className="scroll-mt-20">
+          <h2 className="mb-4 text-xl font-bold">FAQ</h2>
+          <div className="divide-y divide-line rounded-2xl border border-line bg-white">
             {product.faq.map((f) => (
-              <div key={f.question}>
-                <dt className="font-medium">{f.question}</dt>
-                <dd className="mt-1 text-muted">{f.answer}</dd>
-              </div>
+              <details key={f.question} className="group p-5">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium">
+                  {f.question}
+                  <ChevronDown aria-hidden className="size-4 shrink-0 transition group-open:rotate-180" />
+                </summary>
+                <p className="mt-2 text-sm text-muted">{f.answer}</p>
+              </details>
             ))}
-          </dl>
-        </Section>
+          </div>
+        </section>
 
         {/* FR-D07 */}
-        {related.length > 0 && (
-          <Section id="related" title="Related products">
-            <ProductGrid products={related} />
-          </Section>
-        )}
+        <RelatedProducts product={product} />
       </Container>
     </article>
   );
 }
 
-function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
+function Trust({ icon: Icon, title, text }: { icon: typeof ShieldCheck; title: string; text: string }) {
   return (
-    <section id={id} className="scroll-mt-16">
-      <h2 className="mb-4 text-2xl font-bold">{title}</h2>
-      {children}
-    </section>
+    <li className="flex gap-2">
+      <Icon aria-hidden className="size-5 shrink-0 text-brand-600" />
+      <div>
+        <p className="text-sm font-medium">{title}</p>
+        <p className="text-xs text-muted">{text}</p>
+      </div>
+    </li>
   );
 }
 
-function List({ title, items, icon }: { title: string; items: string[]; icon?: "check" | "x" }) {
-  const Icon = icon === "x" ? X : Check;
+function CheckList({ items, negative = false }: { items: string[]; negative?: boolean }) {
+  const Icon = negative ? X : Check;
   return (
-    <div className="rounded-xl bg-surface p-5">
-      <h3 className="font-semibold">{title}</h3>
-      <ul className="mt-3 space-y-2 text-sm">
-        {items.map((item) => (
-          <li key={item} className="flex gap-2">
-            <Icon aria-hidden className={`size-4 shrink-0 ${icon === "x" ? "text-muted" : "text-brand-600"}`} />
-            {item}
-          </li>
-        ))}
-      </ul>
+    <ul className="mt-4 space-y-3 text-sm">
+      {items.map((item) => (
+        <li key={item} className="flex gap-3">
+          <Icon aria-hidden className={`size-4 shrink-0 ${negative ? "text-muted" : "text-brand-600"}`} />
+          <span className={negative ? "text-muted" : ""}>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function SupportRow({
+  term,
+  badge,
+  tone = "brand",
+  children,
+}: {
+  term: string;
+  badge: string;
+  tone?: "brand" | "green";
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="grid grid-cols-[7rem_1fr] gap-4 p-5">
+      <dt className="text-sm font-medium">{term}</dt>
+      <dd>
+        <span
+          className={`rounded px-2 py-0.5 text-xs font-medium ${tone === "green" ? "bg-emerald-50 text-emerald-700" : "bg-brand-50 text-brand-700"}`}
+        >
+          {badge}
+        </span>
+        <p className="mt-1.5 text-xs text-muted">{children}</p>
+      </dd>
     </div>
   );
 }
 
-function PriceTable({ title, items }: { title: string; items: { label: string; amount: string; note?: string }[] }) {
+function PriceList({ title, items }: { title: string; items: { label: string; amount: string; note?: string }[] }) {
   return (
-    <div className="rounded-xl border border-line p-5">
-      <h3 className="font-semibold">{title}</h3>
-      <ul className="mt-3 divide-y divide-line text-sm">
+    <div>
+      <h3 className="text-sm font-semibold">{title}</h3>
+      <ul className="mt-2 divide-y divide-line text-sm">
         {items.map((i) => (
           <li key={i.label} className="flex justify-between gap-4 py-2">
             <span>
               {i.label}
-              {i.note && <span className="block text-muted">{i.note}</span>}
+              {i.note && <span className="block text-xs text-muted">{i.note}</span>}
             </span>
             <span className="font-medium">{i.amount}</span>
           </li>
@@ -253,11 +403,39 @@ function PriceTable({ title, items }: { title: string; items: { label: string; a
   );
 }
 
-function Fact({ term, value }: { term: string; value: string }) {
+function RelatedProducts({ product }: { product: Product }) {
+  const related = getRelatedProducts(product);
+  if (related.length === 0) return null;
   return (
-    <div className="rounded-xl bg-surface p-4">
-      <dt className="text-sm text-muted">{term}</dt>
-      <dd className="mt-1 font-medium">{value}</dd>
-    </div>
+    <section>
+      <div className="mb-4 flex items-end justify-between">
+        <div>
+          <h2 className="text-xl font-bold">Related templates</h2>
+          <p className="text-sm text-muted">You might also like these templates.</p>
+        </div>
+        <Link href="/templates" className="flex items-center gap-1 text-sm font-medium text-brand-600">
+          View all <ArrowRight aria-hidden className="size-4" />
+        </Link>
+      </div>
+      <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {related.map((p) => (
+          <li key={p.slug}>
+            <Link
+              href={`/templates/${p.slug}`}
+              className="block overflow-hidden rounded-xl border border-line bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <ProductPreview product={p} className="h-28" />
+              <div className="p-4">
+                <div className="flex items-start justify-between gap-2">
+                  <h3 className="text-sm font-semibold">{p.name}</h3>
+                  <span className="text-sm font-semibold text-brand-600">{p.pricing.included[0].amount}</span>
+                </div>
+                <p className="mt-1 text-xs text-muted">{p.tagline}</p>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

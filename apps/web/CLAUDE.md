@@ -22,6 +22,7 @@ Set `NEXT_PUBLIC_SITE_URL` for production so canonical URLs, `sitemap.xml`, and 
 - `src/lib/site.ts` — site config, navigation, and the static route list used by `app/sitemap.ts`. Add new public routes there.
 - Search (FR-D03) is a plain GET form to `/templates?q=`; the page reads `searchParams` inside `<Suspense>`, as Cache Components requires.
 - `src/components/home-illustrations.tsx` and `product-preview.tsx` draw decorative mock-ups in HTML/SVG; the homepage layout follows `docs/design/mockups/home.png`.
+- `src/app/templates/[slug]/page.tsx` follows `docs/design/mockups/template-details.png`. Interactive bits are small client components: `product-gallery.tsx` (screenshot switcher), `section-tabs.tsx` (sticky tabs; highlights by IntersectionObserver, and an explicit `#hash` jump wins for 1s because Deployment and Pricing share a row), `share-button.tsx`.
 - `src/lib/journey.ts` — the Discover/Customize/Deploy/Operate steps with an `available` flag; flip it as phases ship.
 - `src/app/templates/[slug]` and `src/app/solutions/[slug]` — prerendered via `generateStaticParams`. With Cache Components, `dynamicParams` is unavailable; unknown slugs call `notFound()` (streamed with HTTP 200 + `noindex`).
 - `src/app/templates/{websites,apps,business-tools}` — thin wrappers around `components/category-page.tsx`; static folders take precedence over `[slug]`.
@@ -36,4 +37,4 @@ Set `NEXT_PUBLIC_SITE_URL` for production so canonical URLs, `sitemap.xml`, and 
 
 ## Not done yet
 
-Interest/contact forms (FR-L01–L02, need `services/api`), filters, sorting and comparison (FR-D04–D06), public creator profile pages, sign-in (owned by `apps/dashboard`), newsletter signup, real screenshots (placeholders render when `screenshots[].src` is empty), analytics events (NFR-10).
+Interest/contact forms (FR-L01–L02, need `services/api`), filters, sorting and comparison (FR-D04–D06), public creator profile pages (the creator card has no "View creator profile" link yet), live demos (no sample product has a `demoUrl`, so the button is hidden), sign-in (owned by `apps/dashboard`), newsletter signup, real screenshots (placeholders render when `screenshots[].src` is empty), analytics events (NFR-10).

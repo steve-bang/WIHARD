@@ -19,10 +19,11 @@ describe("catalog", () => {
     expect(searchProducts("nothing-matches")).toEqual([]);
   });
 
-  it("excludes the product itself from related products", () => {
+  it("ranks close products first and excludes the product itself", () => {
     const crm = getProduct("customer-management-crm")!;
     const related = getRelatedProducts(crm);
-    expect(related.map((p) => p.slug)).toEqual(["inventory-management"]);
+    expect(related.map((p) => p.slug)).toEqual(["inventory-management", "garage-management-website", "booking-system"]);
+    expect(getRelatedProducts(crm, 1)).toHaveLength(1);
   });
 
   it("has consistent sample data", () => {

@@ -26,7 +26,8 @@ export function searchProducts(query: string): Product[] {
       p.name,
       p.tagline,
       p.description,
-      ...p.features,
+      ...p.features.flatMap((f) => [f.title, f.description]),
+      ...p.tags,
       ...p.audience,
       getCategory(p.category).name,
       ...p.solutions.map((s) => getSolution(s)?.name ?? ""),
@@ -57,13 +58,10 @@ export function getSolution(slug: string) {
   return solutions.find((s) => s.slug === slug);
 }
 
-// FR-D07: same category or a shared solution, excluding the product itself.
-export function getRelatedProducts(product: Product, limit = 3): Product[] {
-  return products
-    .filter(
-      (p) =>
-        p.slug !== product.slug &&
-        (p.category === product.category || p.solutions.some((s) => product.solutions.includes(s))),
-    )
-    .slice(0, limit);
+// FR-D07: products sharing the category or a solution first, then the rest of the catalog.
+export function getRelatedProducts(product: Product, limit = 4): Product[] {
+  const others = products.filter((p) => p.slug !== product.slug);
+  const isClose = (p: Product) =>
+    p.category === product.category || p.solutions.some((s) => product.solutions.includes(s));
+  return [...others.filter(isClose), ...others.filter((p) => !isClose(p))].slice(0, limit);
 }
