@@ -15,12 +15,28 @@ function FloatingCard({ icon: Icon, title, text, className }: { icon: typeof Sea
   );
 }
 
-export function HeroIllustration() {
+export interface ShowcaseCard {
+  icon: typeof Search;
+  title: string;
+  text: string;
+}
+
+const cardSlots = ["left-6 top-0", "-right-2 top-10", "bottom-0 left-28"];
+
+export function HeroIllustration({
+  cards = [
+    { icon: Search, title: "Discover", text: "Find ready-to-use templates for your business needs." },
+    { icon: Sparkles, title: "Customize", text: "Describe what you need in natural language." },
+    { icon: Rocket, title: "Deploy", text: "Put your website or app live." },
+  ],
+}: {
+  cards?: ShowcaseCard[];
+}) {
   return (
     <div aria-hidden className="relative mx-auto h-[400px] w-full max-w-[520px]">
-      <FloatingCard icon={Search} title="Discover" text="Find ready-to-use templates for your business needs." className="left-6 top-0" />
-      <FloatingCard icon={Sparkles} title="Customize" text="Describe what you need in natural language." className="-right-2 top-10" />
-      <FloatingCard icon={Rocket} title="Deploy" text="Put your website or app live." className="bottom-0 left-28" />
+      {cards.slice(0, cardSlots.length).map((c, i) => (
+        <FloatingCard key={c.title} {...c} className={cardSlots[i]} />
+      ))}
 
       {/* Desktop dashboard */}
       <div className="absolute left-0 top-24 flex h-56 w-[400px] overflow-hidden rounded-xl border border-line bg-white shadow-xl">

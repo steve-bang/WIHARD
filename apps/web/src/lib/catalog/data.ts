@@ -32,6 +32,7 @@ export const creators: Creator[] = [
 export const solutions: Solution[] = [
   {
     slug: "garage-management",
+    industry: "Garages & vehicle service",
     name: "Garage management",
     summary: "Run an automotive service business: bookings, customers, vehicles, and repair orders.",
     problems: [
@@ -42,6 +43,7 @@ export const solutions: Solution[] = [
   },
   {
     slug: "customer-management",
+    industry: "Sales teams & service businesses",
     name: "Customer management",
     summary: "Keep track of customers, leads, and deals in one place.",
     problems: [
@@ -52,6 +54,7 @@ export const solutions: Solution[] = [
   },
   {
     slug: "booking-management",
+    industry: "Clinics, salons & appointments",
     name: "Booking management",
     summary: "Let customers book appointments and manage your schedule.",
     problems: [
@@ -100,6 +103,8 @@ export const products: Product[] = [
     },
     deployment: "Hosted web application. Hosting is arranged by WIHARD once deployment is available.",
     pricing: {
+      model: "one-time",
+      startingPrice: 29,
       included: [{ label: "Licence", amount: "$29", note: "One-time" }],
       possibleExtras: [
         { label: "Hosting", amount: "Monthly", note: "Depends on usage" },
@@ -144,6 +149,8 @@ export const products: Product[] = [
     },
     deployment: "Website with a custom domain. Hosting is arranged by WIHARD once deployment is available.",
     pricing: {
+      model: "one-time",
+      startingPrice: 49,
       included: [{ label: "Licence", amount: "$49", note: "One-time" }],
       possibleExtras: [
         { label: "Hosting", amount: "Monthly" },
@@ -185,6 +192,8 @@ export const products: Product[] = [
     },
     deployment: "Hosted web application. Hosting is arranged by WIHARD once deployment is available.",
     pricing: {
+      model: "one-time",
+      startingPrice: 39,
       included: [{ label: "Licence", amount: "$39", note: "One-time" }],
       possibleExtras: [
         { label: "Hosting", amount: "Monthly" },
@@ -226,6 +235,8 @@ export const products: Product[] = [
     },
     deployment: "Hosted web application. Hosting is arranged by WIHARD once deployment is available.",
     pricing: {
+      model: "one-time",
+      startingPrice: 45,
       included: [{ label: "Licence", amount: "$45", note: "One-time" }],
       possibleExtras: [{ label: "Hosting", amount: "Monthly" }],
     },

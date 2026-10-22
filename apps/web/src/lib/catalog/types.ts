@@ -7,6 +7,8 @@ export type ProductCategory = "websites" | "apps" | "business-tools";
 // BRD §10.3 — only the publicly visible subset of the product lifecycle.
 export type ProductStatus = "active" | "beta" | "deprecated";
 
+export type PriceModel = "one-time" | "subscription";
+
 export type SupportProvider = "platform" | "creator" | "platform-and-creator";
 
 export interface Creator {
@@ -52,6 +54,9 @@ export interface Product {
   };
   deployment: string;
   pricing: {
+    model: PriceModel;
+    // Base price in USD, used for sorting and filtering.
+    startingPrice: number;
     included: PriceItem[];
     // BR-T01: every cost that may come on top of the base price.
     possibleExtras: PriceItem[];
@@ -72,6 +77,8 @@ export interface Product {
 export interface Solution {
   slug: string;
   name: string;
+  // Short "who it's for" line shown on solution cards.
+  industry: string;
   summary: string;
   problems: string[];
 }

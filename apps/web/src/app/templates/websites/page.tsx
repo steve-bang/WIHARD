@@ -1,7 +1,7 @@
-import { CategoryPage, categoryMetadata } from "@/components/category-page";
+import { TemplatesListingPage, categoryMetadata } from "@/components/category-page";
 
 export const metadata = categoryMetadata("websites");
 
-export default function Page() {
-  return <CategoryPage slug="websites" />;
+export default function Page({ searchParams }: PageProps<"/templates/websites">) {
+  return <TemplatesListingPage searchParams={searchParams} category="websites" />;
 }

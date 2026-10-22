@@ -1,7 +1,9 @@
 import { creators, products, solutions } from "./data";
+import { filterProducts } from "./filter";
 import type { Product, ProductCategory } from "./types";
 
 export type * from "./types";
+export * from "./filter";
 
 export const categories: { slug: ProductCategory; name: string; summary: string }[] = [
   { slug: "websites", name: "Websites", summary: "Websites for businesses, professionals, and services." },
@@ -17,25 +19,8 @@ export function getProducts(filter: { category?: ProductCategory; solution?: str
   );
 }
 
-// FR-D03: keyword search over name, description, features, category, and solutions.
 export function searchProducts(query: string): Product[] {
-  const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
-  if (terms.length === 0) return products;
-  return products.filter((p) => {
-    const haystack = [
-      p.name,
-      p.tagline,
-      p.description,
-      ...p.features.flatMap((f) => [f.title, f.description]),
-      ...p.tags,
-      ...p.audience,
-      getCategory(p.category).name,
-      ...p.solutions.map((s) => getSolution(s)?.name ?? ""),
-    ]
-      .join(" ")
-      .toLowerCase();
-    return terms.every((t) => haystack.includes(t));
-  });
+  return filterProducts({ q: query });
 }
 
 export function getProduct(slug: string) {

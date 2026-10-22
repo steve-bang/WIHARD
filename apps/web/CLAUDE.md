@@ -20,7 +20,8 @@ Set `NEXT_PUBLIC_SITE_URL` for production so canonical URLs, `sitemap.xml`, and 
 
 - `src/lib/catalog/` — product, creator, and solution sample data plus query functions. Every page reads data only through `src/lib/catalog/index.ts`, so swapping in `services/api` calls later changes one module. `types.ts` mirrors the detail-page requirements (FR-P01–P13) and will move to `packages/contracts`.
 - `src/lib/site.ts` — site config, navigation, and the static route list used by `app/sitemap.ts`. Add new public routes there.
-- Search (FR-D03) is a plain GET form to `/templates?q=`; the page reads `searchParams` inside `<Suspense>`, as Cache Components requires.
+- Template listing (`/templates` and the three category pages) is `components/category-page.tsx` → `templates-browser.tsx`. Search, filters, sort, and page all live in the URL (`q`, `category`, `solution`, `price`, `support`, `sort`, `page`); the filter sidebar is a GET form that auto-submits on change (`auto-submit-form.tsx`). Logic and facet counts are in `src/lib/catalog/filter.ts` (values OR within a facet, AND across facets). Pages read `searchParams` inside `<Suspense>`, as Cache Components requires, and set a canonical URL without query params.
+- Layouts follow `docs/design/mockups/`: `templates.png`, `solutions.png`, `template-details.png`, `home.png`. `CatalogHero` is the shared hero for listing pages.
 - `src/components/home-illustrations.tsx` and `product-preview.tsx` draw decorative mock-ups in HTML/SVG; the homepage layout follows `docs/design/mockups/home.png`.
 - `src/app/templates/[slug]/page.tsx` follows `docs/design/mockups/template-details.png`. Interactive bits are small client components: `product-gallery.tsx` (screenshot switcher), `section-tabs.tsx` (sticky tabs; highlights by IntersectionObserver, and an explicit `#hash` jump wins for 1s because Deployment and Pricing share a row), `share-button.tsx`.
 - `src/lib/journey.ts` — the Discover/Customize/Deploy/Operate steps with an `available` flag; flip it as phases ship.
@@ -37,4 +38,4 @@ Set `NEXT_PUBLIC_SITE_URL` for production so canonical URLs, `sitemap.xml`, and 
 
 ## Not done yet
 
-Interest/contact forms (FR-L01–L02, need `services/api`), filters, sorting and comparison (FR-D04–D06), public creator profile pages (the creator card has no "View creator profile" link yet), live demos (no sample product has a `demoUrl`, so the button is hidden), sign-in (owned by `apps/dashboard`), newsletter signup, real screenshots (placeholders render when `screenshots[].src` is empty), analytics events (NFR-10).
+Interest/contact forms (FR-L01–L02, need `services/api`), product comparison (FR-D06), public creator profile pages (the creator card has no "View creator profile" link yet), live demos (no sample product has a `demoUrl`, so the button is hidden), sign-in (owned by `apps/dashboard`), newsletter signup, real screenshots (placeholders render when `screenshots[].src` is empty), analytics events (NFR-10).
