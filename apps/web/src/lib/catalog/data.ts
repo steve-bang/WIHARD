@@ -216,7 +216,7 @@ export const products: Product[] = [
     },
     support: {
       provider: "creator",
-      coverage: ["Bug fixes"],
+      coverage: ["Bug fixes", "Security updates"],
       responseTime: "Within 5 business days",
       duration: "6 months from purchase",
     },

@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { ArrowRight } from "lucide-react";
 import { journeySteps, type JourneyStep } from "@/lib/journey";
+import { LaterBadge } from "./later-badge";
 
 // "inline": number and icon side by side (home, how-it-works). "stacked": large icon above
 // a numbered title (solutions page, per docs/design/mockups/solutions.png).
@@ -48,7 +49,7 @@ export function Journey({
             <div className={stacked ? "" : "pl-10"}>
               <p className={`mt-1 text-muted ${stacked ? "text-xs" : "text-sm"}`}>{text}</p>
               {!available && (
-                <span className="mt-2 inline-block rounded bg-white px-1.5 py-0.5 text-xs text-muted">Coming later</span>
+                <LaterBadge className="mt-2" />
               )}
             </div>
           </li>

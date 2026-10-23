@@ -5,7 +5,6 @@ import {
   ArrowRight,
   ChartColumn,
   Check,
-  ChevronDown,
   ChevronRight,
   ExternalLink,
   Headphones,
@@ -22,6 +21,7 @@ import { Journey } from "@/components/journey";
 import { ProductGallery } from "@/components/product-gallery";
 import { ProductPreview } from "@/components/product-preview";
 import { SectionTabs } from "@/components/section-tabs";
+import { FaqList } from "@/components/faq-list";
 import { JsonLd } from "@/components/json-ld";
 import { ShareButton } from "@/components/share-button";
 import { absoluteUrl, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
@@ -354,17 +354,7 @@ export default async function ProductPage({ params }: PageProps<"/templates/[slu
         {/* FR-P12 */}
         <section id="faq" className="scroll-mt-20">
           <h2 className="mb-4 text-xl font-bold">FAQ</h2>
-          <div className="divide-y divide-line rounded-2xl border border-line bg-white">
-            {product.faq.map((f) => (
-              <details key={f.question} className="group p-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium">
-                  {f.question}
-                  <ChevronDown aria-hidden className="size-4 shrink-0 transition group-open:rotate-180" />
-                </summary>
-                <p className="mt-2 text-sm text-muted">{f.answer}</p>
-              </details>
-            ))}
-          </div>
+          <FaqList items={product.faq} />
         </section>
 
         {/* FR-D07 */}
