@@ -274,6 +274,23 @@ R = Thực hiện · A = Chịu trách nhiệm cuối · C = Tham vấn · I = �
 | BR-O02 | Khách hàng có quyền xuất dữ liệu của mình (áp dụng từ Giai đoạn 3). |
 | BR-O03 | Phạm vi quyền sử dụng (license) phải hiển thị trước khi mua (áp dụng từ Giai đoạn 2). |
 
+### 9.4 Chính sách công bố trên website **[GIẢ ĐỊNH]**
+
+Các giá trị dưới đây **đang hiển thị công khai** trên các trang `/pricing`, `/support-policy`, `/security` để website có nội dung đầy đủ, trong khi Q1, Q5, Q6, Q7 (mục 15) chưa được chốt. Chúng nằm tại một nơi duy nhất trong code: `apps/web/src/lib/policies.ts`. Khi Product Owner thay đổi, sửa đồng thời bảng này và file đó.
+
+| Mã | Chính sách | Giá trị tạm | Câu hỏi mở liên quan |
+|---|---|---|---|
+| BR-P01 | Giờ hỗ trợ | Thứ 2 – Thứ 6, 9:00–18:00 (UTC+7), trừ ngày lễ | Q1 |
+| BR-P02 | Thời gian phản hồi đầu tiên | Sự cố nghiêm trọng (ngừng hoạt động, lỗ hổng bảo mật): 1 ngày làm việc · Lỗi thông thường: 2 ngày làm việc · Câu hỏi chung: 3 ngày làm việc | Q7 |
+| BR-P03 | Hỗ trợ tối thiểu cho mọi sản phẩm | 6 tháng sửa lỗi và vá bảo mật | Q7 |
+| BR-P04 | Hoàn tiền (khi mở bán) | Trong 14 ngày nếu sản phẩm không đúng mô tả | Giai đoạn 2 |
+| BR-P05 | Phí nền tảng cho creator (khi mở bán) | 15% mỗi giao dịch, creator chịu; khách trả đúng giá niêm yết; không phí đăng sản phẩm | Q5 |
+| BR-P06 | Chu kỳ chi trả cho creator | Hằng tháng | Q5 |
+| BR-P07 | Khi creator ngừng hỗ trợ | Báo trước cho khách 30 ngày; WIHARD tìm creator thay thế hoặc tiếp tục vá bảo mật đến hết thời hạn hỗ trợ đã mua | Q6 |
+| BR-P08 | Thời hạn vá lỗ hổng nghiêm trọng | Creator vá trong 7 ngày; quá hạn WIHARD tạm ẩn sản phẩm (FR-M04) | — |
+| BR-P09 | Xác nhận báo cáo lỗ hổng | Trong 2 ngày làm việc | — |
+| BR-P10 | Luật bảo vệ dữ liệu áp dụng | Quy định bảo vệ dữ liệu cá nhân hiện hành của Việt Nam | Q1, NFR-07 |
+
 ---
 
 ## 10. Hành trình người dùng chính
@@ -371,13 +388,13 @@ Các nguồn doanh thu tiềm năng (chưa phải mô hình giá đã chốt):
 
 | # | Câu hỏi | Ảnh hưởng đến |
 |---|---|---|
-| Q1 | Thị trường và ngôn ngữ ra mắt? | NFR-07, NFR-08, nội dung |
+| Q1 | Thị trường và ngôn ngữ ra mắt? *(website đang dùng tạm BR-P01, BR-P10)* | NFR-07, NFR-08, nội dung |
 | Q2 | Lead thuộc về nền tảng hay chuyển cho creator? | FR-L01, quan hệ creator |
 | Q3 | Mở đăng ký creator tự do hay chỉ theo lời mời ở Giai đoạn 1? | FR-C01, khối lượng kiểm duyệt |
 | Q4 | Các loại giấy phép sử dụng nào được hỗ trợ? | Giai đoạn 2 |
-| Q5 | Tỷ lệ phí giao dịch và chu kỳ chi trả cho creator? | Giai đoạn 2 |
-| Q6 | Cơ chế tính liên tục khi creator ngừng hoạt động? | Mục 8, điều khoản creator |
-| Q7 | Mức hỗ trợ tối thiểu bắt buộc với mọi sản phẩm? | BR-T04, FR-P08 |
+| Q5 | Tỷ lệ phí giao dịch và chu kỳ chi trả cho creator? *(website đang dùng tạm BR-P05, BR-P06)* | Giai đoạn 2 |
+| Q6 | Cơ chế tính liên tục khi creator ngừng hoạt động? *(website đang dùng tạm BR-P07)* | Mục 8, điều khoản creator |
+| Q7 | Mức hỗ trợ tối thiểu bắt buộc với mọi sản phẩm? *(website đang dùng tạm BR-P02, BR-P03)* | BR-T04, FR-P08 |
 | Q8 | Nền tảng hosting được chọn cho Giai đoạn 3? | Giai đoạn 3, chi phí |
 
 ---
